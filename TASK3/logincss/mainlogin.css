@@ -1,0 +1,92 @@
+.main {
+  display: block;
+  background-color: white;
+  height: 31.6rem;
+  width: 24rem;
+  margin: 4rem auto auto auto;
+  padding: 1.6rem 2rem 0rem 2rem;
+  border-top: 0.3rem solid #3AC7EC;
+  border-radius: 0.1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.main .title1 {
+  display: flex;
+  font-size: 1.5rem;
+  margin-bottom: 1.9rem;
+}
+.main .title1 .text {
+  margin-left: 3.3rem;
+}
+.main .title1 .arrow img {
+  height: 1.5rem;
+  width: 1.7rem;
+}
+.main .option {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1.2rem;
+}
+.main .option div {
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  font-size: 1.1rem;
+}
+.main .option img {
+  height: 1.3rem;
+  width: 1.3rem;
+}
+.main .state {
+  font-size: 1rem;
+  color: #666666;
+}
+.main .ans {
+  display: flex;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #d7d7d7;
+  margin-bottom: 2rem;
+}
+.main .ans img {
+  margin-left: auto;
+  height: 1.2rem;
+}
+.main .userdetail {
+  display: flex;
+  color: #666666;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #d7d7d7;
+}
+.main .userdetail img {
+  margin-left: auto;
+  height: 1.4rem;
+  width: 1.4rem;
+}
+.main .forgot {
+  text-transform: uppercase;
+  font-size: 1rem;
+  display: flex;
+  justify-content: end;
+  color: #1F7A54;
+  margin-bottom: 1.7rem;
+  margin-top: 0.2rem;
+}
+.main .checkbox {
+  display: flex;
+}
+.main .checkbox img {
+  height: 1.2rem;
+  width: 1.2rem;
+  padding-right: 0.2rem;
+}
+.main .checkbox div {
+  font-size: 1.1rem;
+}
+.main .button1 {
+  display: flex;
+}
+.main .button1 button {
+  background-color: #3FD28B;
+  border: none;
+  text-transform: uppercase;
+  padding: 0.7rem 3.7rem 0.7rem 3.7rem;
+  margin: 1.7rem auto 0rem auto;
+}/*# sourceMappingURL=mainlogin.css.map */

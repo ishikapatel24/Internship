@@ -1,0 +1,35 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+footer .contact {
+  color: #1F7A54;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+footer .footerdetails {
+  display: flex;
+  font-size: 1rem;
+  color: #616161;
+  background-color: #E0E1E1;
+  height: 2rem;
+  justify-content: center;
+  padding-top: 1.1rem;
+}
+footer .footerdetails img {
+  height: 1.6rem;
+  width: 5.4rem;
+  margin-top: -0.3rem;
+  margin-right: 0.5rem;
+}
+footer .footerdetails span {
+  margin-right: 0.5rem;
+}
+footer .footerdetails p span {
+  font-weight: bold;
+}
+footer .footerdetails .p1 {
+  margin-right: 0.5rem;
+}/*# sourceMappingURL=footerlogin.css.map */

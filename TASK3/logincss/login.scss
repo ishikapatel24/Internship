@@ -1,0 +1,18 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Quicksand';
+}
+body{
+    background-color: #EEEEEE;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url(Quicksand-Medium.ttf);
+}
+
+@import "./navlogin";
+@import "./mainlogin";
+@import "./footerlogin";
+
