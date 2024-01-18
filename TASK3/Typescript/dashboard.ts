@@ -1,12 +1,10 @@
-// import card from "../Json/carddata.json" assert { type: "json" };
+// import card from "../Json/carddata.json";
 // import alert from "../Json/alert.json" assert { type: "json" };
 // import ann from "../Json/announcement.json" assert { type: "json" };
 
-const cards = document.querySelector(".cards");
-const alerts = document.querySelector(".alert");
-const an = document.querySelector(".announcement");
-
-// for hamburgermenu option and onclick function
+const cardhtml = document.querySelector(".cards") as HTMLElement;
+const alerthtml = document.querySelector(".alert") as HTMLElement;
+const announcementhtml = document.querySelector(".announcement") as HTMLElement;
 
 fetch("./Json/carddata.json")
   .then(function (response) {
@@ -15,7 +13,7 @@ fetch("./Json/carddata.json")
   .then(function (card) {
     const cardlen = card.Carddetails.length;
     for (let i = 0; i < cardlen; i++) {
-      cards.innerHTML += `
+        cardhtml.innerHTML += `
           <div class="cardmain${i + 1}">
           ${i == 3 ? `<div id="expired">EXPIRED</div>` : ""}
           <div class="card1">
@@ -80,7 +78,7 @@ fetch("./Json/alert.json")
     const bg = "background-color:white;";
 
     for (let i = 0; i < len; i++) {
-      alerts.innerHTML += `<div class="alertdata" style="${
+        alerthtml.innerHTML += `<div class="alertdata" style="${
         alert.alert[i].bgcolor == 1 ? bg : ""
       }">
     <div class="alertflex">
@@ -103,7 +101,7 @@ fetch("./Json/announcement.json")
   .then(function (ann) {
     const ln = ann.announcement.length;
     for (let i = 0; i < ln; i++) {
-      an.innerHTML += `<div class="announcementdata" ${
+        announcementhtml.innerHTML += `<div class="announcementdata" ${
         ann.announcement[i].bgcolor == 1 ? `style=background-color:white;` : ``
       }>
   <div class="announcementflex">
@@ -134,28 +132,31 @@ fetch("./Json/announcement.json")
     }
   });
 
-const hamburgermenu = document.querySelector(".hamburgermenu");
+
+// for hamburgermenu option and onclick function
+
+const hamburgerMenu = document.querySelector(".hamburgermenu") as HTMLElement;
 
 function myFunction() {
-  const x = document.querySelector(".dashboardoption");
+  const x = document.querySelector(".dashboardoption") as HTMLElement;
   // console.log(x.style.display);
   if (x.style.display === "block") {
     x.style.display = "none";
   } else {
     x.style.display = "block";
   }
-}
+} 
 
-hamburgermenu.addEventListener("click", myFunction);
+hamburgerMenu.addEventListener("click", myFunction);
 
 // for resize screen (display dashboard option)
 
 function resizefunction() {
-  const hamburgermenu = document.querySelector(".item2");
-  let hamburgermenudisplay = window.getComputedStyle(hamburgermenu).display;
-  const dashboardoption = document.querySelector(".dashboardoption");
-  let dashboardoptiondisplay = window.getComputedStyle(dashboardoption).display;
-  // console.log(hamburgermenudisplay);
+  const hamburgermenu = document.querySelector(".item2") as HTMLElement;
+  let hamburgermenudisplay = window.getComputedStyle(hamburgermenu).display as string;
+  const dashboardoption = document.querySelector(".dashboardoption") as HTMLElement;
+  let dashboardoptiondisplay = window.getComputedStyle(dashboardoption).display as string;
+  console.log(hamburgermenudisplay);
   if (hamburgermenudisplay === "none") {
     dashboardoption.style.display = "flex";
   } else if (

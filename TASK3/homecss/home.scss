@@ -13,7 +13,7 @@ body{
 }
 
 .mainalert{
-    display: none;
+    // display: none;
     position: absolute;
     overflow-y: scroll;
     top: 3.5rem;
@@ -21,6 +21,11 @@ body{
     height: 28rem;
     background-color: #FFFFFF;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    opacity: 0;
+    &.open1{
+        opacity: 1;
+    }
+    transition:all 0.3s ease-in-out;
 }
 
 .alertdata{
@@ -85,7 +90,7 @@ body{
 }
 
 .mainannouncement{
-    display: none;
+    // display: none;
     position: absolute;
     overflow-y: scroll;
     top: 3.5rem;
@@ -93,8 +98,14 @@ body{
     height: 28rem;
     background-color: #FFFFFF;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    //t
-    transition:all 4s ease-in-out;
+    opacity: 0;
+    &.open{
+        opacity: 1;
+    }
+    &.dis{
+        display: none;
+    }
+    transition:all 0.3s ease-in-out;
 }
 
 
@@ -195,6 +206,7 @@ body{
         top: 3.5rem;
         right: 1rem;
         background-color: #FFFFFF;
+        transition: 5s;
         .dashboardcontent{
             background-color: #F3F3F3; 
             .content1{
@@ -264,7 +276,11 @@ body{
     .mainannouncement{
         right: 4.3rem;
     }
-
+    
+    .dashboardoption{
+        display: flex;
+    }
+    
     .dashboardoption li a{
         color:  #3FD28B;
         margin-right: 2rem;
@@ -342,9 +358,7 @@ body{
     }
 }
 
-.dashboardoption{
-    display: flex;
-}
+
 
 .option{
     background-color: #8DDC97;
