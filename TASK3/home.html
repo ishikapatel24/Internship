@@ -42,7 +42,7 @@
                         src="image/alerts.png">
                     <div class="num" id="alertnum">2</div>
                 </a></li>
-            <div class="mainalert" onmouseover="alertFunction2()" onmouseout="alertClose()">
+            <div class="mainalert" onmouseover="alertFunction()" onmouseout="alertClose()">
                 <div class="alert">
                     <!-- <div class="alertdata">
                     <div class="alertflex">
@@ -63,7 +63,7 @@
                 </a>
             </li>
 
-            <div class="mainannouncement" onmouseout="announcementsClose()" onmouseover="announcementsFunction2()">
+            <div class="mainannouncement" onmouseover="announcementsFunction()" onmouseout="announcementsClose()">
                 <div class="announcement">
                     <!-- <div class="announcementdata">
                     <div class="announcementflex">
@@ -257,79 +257,59 @@
     </script>
     <script>
 
-        function alertFunction() {
-            const x = document.querySelector("#alertnum");
-            const y = document.querySelector(".mainalert");
+function alertFunction() {
+        const x = document.querySelector("#alertnum");
+        const y = document.querySelector(".mainalert");
+        const z = document.querySelector(".alertbutton");
+        const y1 = document.querySelector(".mainannouncement");
+        const z1 = document.querySelector(".mainannouncement .button");
+        const x1 = document.querySelector("#announcementsnum");
 
-            x.style.visibility = "hidden";
-            y.classList.add("open1");
-        }
+        
+          x.style.visibility = "hidden";
+          y.classList.add("open2");
+          z.classList.add("btn1");
+          y1.classList.remove("open");
+          z1.classList.remove("btn");
+          x1.style.visibility="visible";
+      }
 
-        function alertClose() {
-            const x = document.querySelector("#alertnum");
-            const y = document.querySelector(".mainalert");
-            const annDisplay = window.getComputedStyle(y).opacity;
-            if (x.style.visibility === "hidden" && annDisplay != '0') {
-                x.style.visibility = "visible";
-                y.classList.remove("open1");
-            }
-        }
+      function alertClose(){
+        const x = document.querySelector("#alertnum");
+        const y = document.querySelector(".mainalert");
+        const z = document.querySelector(".alertbutton");
 
-        function alertFunction2() {
-            const x = document.querySelector("#alertnum");
-            const y = document.querySelector(".mainalert");
-            const annDisplay = window.getComputedStyle(y).opacity;
-            if (annDisplay != '0') {
-                x.style.visibility = "hidden";
-                y.classList.add("open1");
-            }
-        }
+          x.style.visibility = "visible";
+          y.classList.remove("open2");
+          z.classList.remove("btn1");
+      }
 
+      function announcementsFunction() {
+        const x = document.querySelector("#alertnum");
+        const y = document.querySelector(".mainalert");
+        const z = document.querySelector(".alertbutton");
+        const y1 = document.querySelector(".mainannouncement");
+        const z1 = document.querySelector(".mainannouncement .button");
+        const x1 = document.querySelector("#announcementsnum");
 
-        // function announcementsFunction() {
-        //     const x = document.querySelector("#announcementsnum");
-        //     const y = document.querySelector(".mainannouncement");
+        
+          x1.style.visibility = "hidden";
+          y1.classList.add("open");
+          z1.classList.add("btn");
+          y.classList.remove("open2");
+          z.classList.remove("btn2");
+          x.style.visibility="visible";
+      }
 
-        //     x.style.visibility = "hidden";
-        //     y.style.display = "block";
-        // }
+      function announcementsClose(){
+        const x = document.querySelector("#announcementsnum");
+        const y = document.querySelector(".mainannouncement");
+        const z = document.querySelector(".mainannouncement .button");
 
-        // function announcementsClose() {
-        //     const x = document.querySelector("#announcementsnum");
-        //     const y = document.querySelector(".mainannouncement");
-
-        //     if (x.style.visibility === "hidden" && y.style.display === "block") {
-        //         x.style.visibility = "visible";
-        //         y.style.display = "none";
-        //     }
-        // }
-
-        function announcementsFunction() {
-            const x = document.querySelector("#announcementsnum");
-            const y = document.querySelector(".mainannouncement");
-            x.style.visibility = "hidden";
-            y.classList.add("open");
-        }
-
-        function announcementsClose() {
-            const x = document.querySelector("#announcementsnum");
-            const y = document.querySelector(".mainannouncement");
-            const annDisplay = window.getComputedStyle(y).opacity;
-            if (x.style.visibility === "hidden" && annDisplay != "0") {
-                x.style.visibility = "visible";
-                y.classList.remove("open");
-            }
-        }
-
-        function announcementsFunction2() {
-            const x = document.querySelector("#announcementsnum");
-            const y = document.querySelector(".mainannouncement");
-            const annDisplay = window.getComputedStyle(y).opacity;
-            if (annDisplay != "0") {
-                x.style.visibility = "hidden";
-                y.classList.add("open");
-            }
-        }
+          x.style.visibility = "visible";
+          y.classList.remove("open");
+          z.classList.remove("btn");
+      }
 
     </script>
 </body>

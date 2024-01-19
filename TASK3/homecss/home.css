@@ -18,17 +18,23 @@ body {
 }
 .mainalert {
   position: absolute;
-  overflow-y: scroll;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
   top: 3.5rem;
   width: 17rem;
-  height: 28rem;
   background-color: #FFFFFF;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  opacity: 0;
+  height: 0rem;
   transition: all 0.3s ease-in-out;
 }
-.mainalert.open1 {
-  opacity: 1;
+.mainalert.open2 {
+  height: 28rem;
+}
+
+.alert {
+  height: 26.8rem;
+  overflow: auto;
 }
 
 .alertdata {
@@ -59,29 +65,26 @@ body {
   justify-content: flex-end;
 }
 
-.mainalert::-webkit-scrollbar {
+.alert::-webkit-scrollbar {
   width: 3px;
 }
 
 /* Track */
-.mainalert::-webkit-scrollbar-track {
+.alert::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-.mainalert::-webkit-scrollbar-thumb {
+.alert::-webkit-scrollbar-thumb {
   background: #979797;
 }
 
 /* Handle on hover */
-.mainalert::-webkit-scrollbar-thumb:hover {
+.alert::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
 .alertbutton {
-  position: fixed;
-  top: 31.5rem;
-  width: 17rem;
   text-align: center;
   padding: 0.8rem 0 0.8rem 0;
   background-color: #FFFFFF;
@@ -92,20 +95,23 @@ body {
 
 .mainannouncement {
   position: absolute;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
   top: 3.5rem;
   width: 17rem;
-  height: 28rem;
   background-color: #FFFFFF;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  opacity: 0;
+  height: 0;
   transition: all 0.3s ease-in-out;
 }
 .mainannouncement.open {
-  opacity: 1;
+  height: 28rem;
 }
-.mainannouncement.dis {
-  display: none;
+
+.announcement {
+  overflow: auto;
+  height: 26.8rem;
 }
 
 .announcementdata {
@@ -153,89 +159,36 @@ body {
   margin-left: auto;
 }
 
-.mainannouncement::-webkit-scrollbar {
+.announcement::-webkit-scrollbar {
   width: 3px;
 }
 
 /* Track */
-.mainannouncement::-webkit-scrollbar-track {
+.announcement::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-.mainannouncement::-webkit-scrollbar-thumb {
+.announcement::-webkit-scrollbar-thumb {
   background: #979797;
 }
 
 /* Handle on hover */
-.mainannouncement::-webkit-scrollbar-thumb:hover {
+.announcement::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-@media only screen and (max-width: 1000px) {
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-  .cardmain1, .cardmain2, .cardmain3, .cardmain4 {
-    margin-right: 4rem;
-    margin-left: 4rem;
-  }
-  .navbar ul li a img {
-    height: 1.6rem;
-  }
-  .mainalert {
-    right: 11.8rem;
-  }
-  .mainannouncement {
-    right: 7.8rem;
-  }
-  .dashboardoption {
-    display: none;
-    width: 14rem;
-    position: absolute;
-    top: 3.5rem;
-    right: 1rem;
-    background-color: #FFFFFF;
-    transition: 5s;
-  }
-  .dashboardoption .dashboardcontent {
-    background-color: #F3F3F3;
-  }
-  .dashboardoption .dashboardcontent .content1 {
-    display: flex;
-    align-items: center;
-  }
-  .dashboardoption .dashboarddetails {
-    display: flex;
-    align-items: center;
-  }
-  .dashboardoption li {
-    padding: 0.9rem;
-  }
-  .dashboardoption li a {
-    color: #1F7A54;
-  }
-  .dashboardoption .ig {
-    margin-left: auto;
-    margin-right: 0.5rem;
-    height: 1.4rem;
-    width: 1.4rem;
-  }
-  .dashboardoption .coursecatalog {
-    padding-left: 2rem;
-  }
-}
 .button {
-  position: fixed;
-  top: 31.5rem;
-  width: 17rem;
   padding: 0.8rem 0 0.8rem 0;
-  display: flex;
   background-color: #FFFFFF;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #1F7A54;
   font-size: 0.9rem;
+}
+.button.btn {
+  top: 31.5rem;
+  width: 17rem;
+  display: flex;
 }
 .button .showallbutton {
   width: 50%;
@@ -247,35 +200,6 @@ body {
   text-align: center;
 }
 
-@media only screen and (min-width: 1000px) {
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .item2 {
-    display: none;
-  }
-  .mainalert {
-    right: 8rem;
-  }
-  .mainannouncement {
-    right: 4.3rem;
-  }
-  .dashboardoption {
-    display: flex;
-  }
-  .dashboardoption li a {
-    color: #3FD28B;
-    margin-right: 2rem;
-  }
-  .item1 a:hover {
-    color: white;
-    border-bottom: 3px solid white;
-  }
-  .ig, .coursecatalog {
-    display: none;
-  }
-}
 .navbar {
   background-color: #222222;
   position: fixed;
@@ -519,4 +443,88 @@ footer .footerdetails p span {
   text-decoration: none;
   color: #1F7A54;
   font-size: 1rem;
+}
+
+@media only screen and (max-width: 1000px) {
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .cardmain1, .cardmain2, .cardmain3, .cardmain4 {
+    margin-right: 4rem;
+    margin-left: 4rem;
+  }
+  .navbar ul li a img {
+    height: 1.6rem;
+  }
+  .mainalert {
+    right: 11.8rem;
+  }
+  .mainannouncement {
+    right: 7.8rem;
+  }
+  .dashboardoption {
+    display: none;
+    width: 14rem;
+    position: absolute;
+    top: 3.5rem;
+    right: 1rem;
+    background-color: #FFFFFF;
+    transition: 5s;
+  }
+  .dashboardoption .dashboardcontent {
+    background-color: #F3F3F3;
+  }
+  .dashboardoption .dashboardcontent .content1 {
+    display: flex;
+    align-items: center;
+  }
+  .dashboardoption .dashboarddetails {
+    display: flex;
+    align-items: center;
+  }
+  .dashboardoption li {
+    padding: 0.9rem;
+  }
+  .dashboardoption li a {
+    color: #1F7A54;
+  }
+  .dashboardoption .ig {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    height: 1.4rem;
+    width: 1.4rem;
+  }
+  .dashboardoption .coursecatalog {
+    padding-left: 2rem;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .item2 {
+    display: none;
+  }
+  .mainalert {
+    right: 8rem;
+  }
+  .mainannouncement {
+    right: 4.3rem;
+  }
+  .dashboardoption {
+    display: flex;
+  }
+  .dashboardoption li a {
+    color: #3FD28B;
+    margin-right: 2rem;
+  }
+  .item1 a:hover {
+    color: white;
+    border-bottom: 3px solid white;
+  }
+  .ig, .coursecatalog {
+    display: none;
+  }
 }/*# sourceMappingURL=home.css.map */
