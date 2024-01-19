@@ -15,13 +15,14 @@
             <img class="logo1" src="image/headerlogo.png" alt="hey">
         </div>
     </nav>
-    <div class="main">
-        <div class="title1">
-            <div class="arrow"><img src="image/arrow.png"></div>
-            <div class="text">Log in With Quantum</div>
-        </div>
+    <form action="">
+        <div class="main">
+            <div class="title1">
+                <div class="arrow"><img src="image/arrow.png"></div>
+                <div class="text">Log in With Quantum</div>
+            </div>
 
-        <div class="option">
+            <!-- <div class="option">
             <img src="image/radio-button-on.png">
             <div>District</div>
             <img src="image/radio-button-off.png">
@@ -57,11 +58,50 @@
         <div class="button1">
             <button>Log In</button>
         </div>
-    </div>
+    </div> -->
+
+            <div class="option">
+                <input type="radio" id="district" name="Belongs" value="District" class="hidden-radio" checked><label
+                    for="district" class="custom-radio districtlabel">District</label>
+                <input type="radio" id="is" name="Belongs" value="Independent school" class="hidden-radio"><label
+                    for="is" class="custom-radio">Independent
+                    school</label>
+            </div>
+            <div class="state">State*</div>
+            <div class="ans">
+                <select class="option1">
+                    <option value="Alabama">Alabama</option>
+                    <option value="Alabama2">Alabama 2</option>
+                </select>
+            </div>
+            <div class="state">District*</div>
+            <div class="ans">
+                <select class="option2">
+                    <option value="Alabama">Alabama School District</option>
+                    <option value="Alabama2">Alabama School District 2</option>
+                </select>
+            </div>
+            <input type="text" class="userdetail" placeholder="Username/Email ID*"></input>
+            <div class="forgot">forgot username?</div>
+            <div class="userdetail">
+                <input type="password" class="userdetail" id="myInput" placeholder="Password*"></input>
+                <img src="image/preview.png" onclick="hide()" style="cursor: pointer;">
+            </div>
+            <div class="forgot">forgot password?</div>
+
+            <div class="checkbox">
+                <input type="checkbox" checked>Remember Me</input>
+            </div>
+
+            <div class="buttondis"><button class="button1">Log In</button></div>
+
+        </div>
+    </form>
+
 
     <footer>
         <div class="contact">
-            About<span style="color: #616161;"> | </span>Contact Us
+            <a href="">About</a><span style="color: #616161;"> | </span><a href="">Contact Us</a>
         </div>
         <div class="footerdetails">
             <img src="image/logo.png">
@@ -71,6 +111,17 @@
             <p class="p1">All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        function hide() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 </body>
 
 </html>

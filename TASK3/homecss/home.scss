@@ -12,6 +12,11 @@ body{
     src: url(../Quicksand-Medium.ttf);
 }
 
+@font-face {
+    font-family: 'Quicksand1';
+    src: url(../Quicksand-SemiBold.ttf);
+}
+
 .mainalert{
     // display: none;
     position: absolute;
@@ -408,11 +413,20 @@ body{
             display: flex;
             margin-top: -0.2rem;
             border-bottom: 1px solid #bfbdbd;
-            > div{
+            // > div{
+            //     color: #333333;
+            //     font-weight: bold;
+            //     font-size: 1rem;
+            //     margin-right: 2rem;
+            // }
+            select{
                 color: #333333;
                 font-weight: bold;
                 font-size: 1rem;
-                margin-right: 2rem;
+                // margin-right: 1.5rem;
+                border: none;
+                background-color: #EEEEEE;
+                padding-right: 3rem;
             }
         }
         > div{
@@ -446,12 +460,19 @@ body{
             width: 72%;
             > .bigtext {
                 display: flex;
-                font-size: 1.1rem;
                 margin-bottom: 0.7rem;
                 > img{
                     margin-left: auto;
                     height: 1.4rem;
                     width: 1.4rem;
+                }
+                select{
+                    border: none;
+                    margin-left: -0.2rem;
+                }
+                .option2{
+                    width: 100%;
+                    font-size: 1rem;
                 }
             }
             .smalltext{
@@ -539,5 +560,13 @@ body{
             font-weight: bold;
             margin-left: 0.5rem;
         }
+    }
+}
+
+.contact {
+    a{
+        text-decoration: none;
+        color: #1F7A54;
+        font-size: 1rem;
     }
 }

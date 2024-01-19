@@ -12,6 +12,10 @@ body {
   font-family: "Quicksand";
   src: url(../Quicksand-Medium.ttf);
 }
+@font-face {
+  font-family: "Quicksand1";
+  src: url(../Quicksand-SemiBold.ttf);
+}
 .mainalert {
   position: absolute;
   overflow-y: scroll;
@@ -381,11 +385,13 @@ body {
   margin-top: -0.2rem;
   border-bottom: 1px solid #bfbdbd;
 }
-.search .rightsearch .coursedetails > div {
+.search .rightsearch .coursedetails select {
   color: #333333;
   font-weight: bold;
   font-size: 1rem;
-  margin-right: 2rem;
+  border: none;
+  background-color: #EEEEEE;
+  padding-right: 3rem;
 }
 .search .rightsearch > div {
   margin-right: 0.3rem;
@@ -417,13 +423,20 @@ body {
 }
 .cardmain1 .card1 .carddetails > .bigtext, .cardmain2 .card1 .carddetails > .bigtext, .cardmain3 .card1 .carddetails > .bigtext, .cardmain4 .card1 .carddetails > .bigtext {
   display: flex;
-  font-size: 1.1rem;
   margin-bottom: 0.7rem;
 }
 .cardmain1 .card1 .carddetails > .bigtext > img, .cardmain2 .card1 .carddetails > .bigtext > img, .cardmain3 .card1 .carddetails > .bigtext > img, .cardmain4 .card1 .carddetails > .bigtext > img {
   margin-left: auto;
   height: 1.4rem;
   width: 1.4rem;
+}
+.cardmain1 .card1 .carddetails > .bigtext select, .cardmain2 .card1 .carddetails > .bigtext select, .cardmain3 .card1 .carddetails > .bigtext select, .cardmain4 .card1 .carddetails > .bigtext select {
+  border: none;
+  margin-left: -0.2rem;
+}
+.cardmain1 .card1 .carddetails > .bigtext .option2, .cardmain2 .card1 .carddetails > .bigtext .option2, .cardmain3 .card1 .carddetails > .bigtext .option2, .cardmain4 .card1 .carddetails > .bigtext .option2 {
+  width: 100%;
+  font-size: 1rem;
 }
 .cardmain1 .card1 .carddetails .smalltext, .cardmain2 .card1 .carddetails .smalltext, .cardmain3 .card1 .carddetails .smalltext, .cardmain4 .card1 .carddetails .smalltext {
   font-size: 0.7rem;
@@ -500,4 +513,10 @@ footer .footerdetails span {
 footer .footerdetails p span {
   font-weight: bold;
   margin-left: 0.5rem;
+}
+
+.contact a {
+  text-decoration: none;
+  color: #1F7A54;
+  font-size: 1rem;
 }/*# sourceMappingURL=home.css.map */

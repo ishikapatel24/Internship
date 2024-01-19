@@ -13,7 +13,7 @@ fetch("./Json/carddata.json")
   .then(function (card) {
     const cardlen = card.Carddetails.length;
     for (let i = 0; i < cardlen; i++) {
-        cardhtml.innerHTML += `
+      cardhtml.innerHTML += `
           <div class="cardmain${i + 1}">
           ${i == 3 ? `<div id="expired">EXPIRED</div>` : ""}
           <div class="card1">
@@ -23,45 +23,44 @@ fetch("./Json/carddata.json")
                       <div>${card.Carddetails[i].heading}</div>
                       <img src="${card.Carddetails[i].favimage}">
                   </div>
-                  <div class="smalltext">${
-                    card.Carddetails[i].courseSubject
-                  } | Grade ${
-        card.Carddetails[i].courseGrade
-      }<span style="padding-left: 0.2rem; color: #1F7A54;">+${
-        card.Carddetails[i].additionalCourseGrade
-      }</span></div>
-                  <div class="smalltext"><span>${
-                    card.Carddetails[i].courseLength.units
-                  }</span> Units <span style="padding-left: 0.2rem;">${
-        card.Carddetails[i].courseLength.lessons
-      }</span> Lessons <span style="padding-left: 0.2rem;">${
-        card.Carddetails[i].courseLength.topics
-      }</span> Topics</div>
+                  <div class="smalltext">${card.Carddetails[i].courseSubject
+        } | Grade ${card.Carddetails[i].courseGrade
+        }<span style="padding-left: 0.2rem; color: #1F7A54;">+${card.Carddetails[i].additionalCourseGrade
+        }</span></div>
+                  <div class="smalltext"><span>${card.Carddetails[i].courseLength.units
+        }</span> Units <span style="padding-left: 0.2rem;">${card.Carddetails[i].courseLength.lessons
+        }</span> Lessons <span style="padding-left: 0.2rem;">${card.Carddetails[i].courseLength.topics
+        }</span> Topics</div>
                   <div class="bigtext" id="classdet">
-                      <div ${
-                        card.Carddetails[i].classoption === null
-                          ? ` style="color:#686868"`
-                          : ``
-                      }>${
-        card.Carddetails[i].classoption !== null
-          ? card.Carddetails[i].classoption
-          : `No Classes`
-      }</div>
-                      <img src="${card.Carddetails[i].arrowimage}">
+                  <select class="option2">
+                     ${card.Carddetails[i].classoption === "1" ? `<option value="Mr.Frank's Class B" selected>Mr.Frank's Class B</option>
+                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
+                     <option value="All Classes">All Classes</option>
+                     <option value="No Classes">No Classes</option>`:``}
+                     ${card.Carddetails[i].classoption === "2" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
+                     <option value="Mr.Frank's Class A" selected>Mr.Frank's Class A</option>
+                     <option value="All Classes">All Classes</option>
+                     <option value="No Classes">No Classes</option>`:``}
+                     ${card.Carddetails[i].classoption === "3" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
+                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
+                     <option value="All Classes" selected>All Classes</option>
+                     <option value="No Classes">No Classes</option>`:``}
+                     ${card.Carddetails[i].classoption === "4" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
+                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
+                     <option value="All Classes">All Classes</option>
+                     <option value="No Classes" selected>No Classes</option>`:``} 
+                  </select>
                   </div>
-                  <div class="smalltext">${
-                    card.Carddetails[i].totalstudents
-                  }</div>
+                  <div class="smalltext">${card.Carddetails[i].totalstudents
+        }</div>
               </div>
           </div>
           <div class="symbol">
               <div><img src="${card.Carddetails[i].previewimage}"></div>
-              <div class="lightimage"><img src="${
-                card.Carddetails[i].manageimage
-              }"></div>
-              <div class="lightimage"><img src="${
-                card.Carddetails[i].gradeimage
-              }"></div>
+              <div class="lightimage"><img src="${card.Carddetails[i].manageimage
+        }"></div>
+              <div class="lightimage"><img src="${card.Carddetails[i].gradeimage
+        }"></div>
               <div><img src="${card.Carddetails[i].reportimage}"></div>
           </div>
           </div>`;
@@ -78,17 +77,15 @@ fetch("./Json/alert.json")
     const bg = "background-color:white;";
 
     for (let i = 0; i < len; i++) {
-        alerthtml.innerHTML += `<div class="alertdata" style="${
-        alert.alert[i].bgcolor == 1 ? bg : ""
-      }">
+      alerthtml.innerHTML += `<div class="alertdata" style="${alert.alert[i].bgcolor == 1 ? bg : ""
+        }">
     <div class="alertflex">
       <div class="alertcontent">${alert.alert[i].content}
       </div>
       <img src="${alert.alert[i].image}" alt="" class="alertimage">
   </div>
-  <div class="alertcourse"><span>${alert.alert[i].cource.course1}</span>${
-        alert.alert[i].cource.msg
-      }</div>
+  <div class="alertcourse"><span>${alert.alert[i].cource.course1}</span>${alert.alert[i].cource.msg
+        }</div>
   <div class="alertdate">${alert.alert[i].date}</div>
   </div>`;
     }
@@ -101,14 +98,12 @@ fetch("./Json/announcement.json")
   .then(function (ann) {
     const ln = ann.announcement.length;
     for (let i = 0; i < ln; i++) {
-        announcementhtml.innerHTML += `<div class="announcementdata" ${
-        ann.announcement[i].bgcolor == 1 ? `style=background-color:white;` : ``
-      }>
+      announcementhtml.innerHTML += `<div class="announcementdata" ${ann.announcement[i].bgcolor == 1 ? `style=background-color:white;` : ``
+        }>
   <div class="announcementflex">
     <div class="announcementname">
-      <span>${ann.announcement[i].name.designation}</span>&nbsp;${
-        ann.announcement[i].name.fullname
-      }
+      <span>${ann.announcement[i].name.designation}</span>&nbsp;${ann.announcement[i].name.fullname
+        }
     </div>
     <img
       src="${ann.announcement[i].image}"
@@ -120,11 +115,10 @@ fetch("./Json/announcement.json")
   <div class="announcementcourse">${ann.announcement[i].cource}</div>
   <div class="filedate">
     <div class="file">
-     ${
-       ann.announcement[i].ig == 1
-         ? `<img src="./image/fileAttach.png" alt="">&nbsp;`
-         : ``
-     }${ann.announcement[i].files}
+     ${ann.announcement[i].ig == 1
+          ? `<img src="./image/fileAttach.png" alt="">&nbsp;`
+          : ``
+        }${ann.announcement[i].files}
     </div>
     <div class="announcementdate">${ann.announcement[i].date}</div>
   </div>
@@ -145,7 +139,7 @@ function myFunction() {
   } else {
     x.style.display = "block";
   }
-} 
+}
 
 hamburgerMenu.addEventListener("click", myFunction);
 
@@ -196,3 +190,13 @@ window.addEventListener("resize", resizefunction);
 // y.addEventListener("click",announcementsFunction);
 
 // Alert Option
+
+// <div ${
+//   card.Carddetails[i].classoption === null
+//     ? ` style="color:#686868"`
+//     : ``
+// }>${
+// card.Carddetails[i].classoption !== null
+// ? card.Carddetails[i].classoption
+// : `No Classes`
+// }</div>
