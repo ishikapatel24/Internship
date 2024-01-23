@@ -1,7 +1,7 @@
 // import card from "../Json/carddata.json";
 // import alert from "../Json/alert.json" assert { type: "json" };
 // import ann from "../Json/announcement.json" assert { type: "json" };
-import {cardData,ResponseDetails} from "./interface";
+import { cardData, ResponseDetails } from "./interface";
 
 
 const cardhtml = document.querySelector(".cards") as HTMLElement;
@@ -10,7 +10,7 @@ const announcementhtml = document.querySelector(".announcement") as HTMLElement;
 
 fetch("./Json/carddata.json")
   .then(function (response) {
-    return response.json() as Promise<ResponseDetails>; 
+    return response.json() as Promise<ResponseDetails>;
   })
   .then(function (card) {
     const cardlen = card.Carddetails.length;
@@ -35,36 +35,50 @@ fetch("./Json/carddata.json")
         }</span> Lessons <span style="padding-left: 0.2rem;">${card.Carddetails[i].courseLength.topics
         }</span> Topics</div>
                   <div class="bigtext" id="classdet">
-                  <select class="option2">
-                     ${card.Carddetails[i].classoption === "1" ? `<option value="Mr.Frank's Class B" selected>Mr.Frank's Class B</option>
-                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
-                     <option value="All Classes">All Classes</option>
-                     <option value="No Classes">No Classes</option>`:``}
-                     ${card.Carddetails[i].classoption === "2" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
-                     <option value="Mr.Frank's Class A" selected>Mr.Frank's Class A</option>
-                     <option value="All Classes">All Classes</option>
-                     <option value="No Classes">No Classes</option>`:``}
-                     ${card.Carddetails[i].classoption === "3" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
-                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
+                  ${card.Carddetails[i].classoption === null ? 
+                  `<select class="option2">
                      <option value="All Classes" selected>All Classes</option>
-                     <option value="No Classes">No Classes</option>`:``}
-                     ${card.Carddetails[i].classoption === "4" ? `<option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
+                  </select>`: ``}
+                  ${card.Carddetails[i].classoption === "Mr.Frank's Class A" ?
+                  `<select class="option2">
+                     <option value="Mr.Frank's Class A" selected>Mr.Frank's Class A</option>
+                     <option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
+                  </select>`: ``}
+                  ${card.Carddetails[i].classoption === "Mr.Frank's Class B" ?
+                  `<select class="option2">
+                     <option value="Mr.Frank's Class B" selected>Mr.Frank's Class B</option>
                      <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
-                     <option value="All Classes">All Classes</option>
-                     <option value="No Classes" selected>No Classes</option>`:``} 
-                  </select>
+                  </select>`: ``}
+                  ${card.Carddetails[i].classoption === "" ? 
+                  `<select class="option2" disabled>
+                     <option value="No Classes" selected>No Classes</option>
+                  </select>`: ``} 
                   </div>
-                  <div class="smalltext">${card.Carddetails[i].totalstudents
-        }</div>
+      
+                  ${card.Carddetails[i].courseEnrollInfo.totalStudents !== null
+                  ? `<div class="smalltext">${card.Carddetails[i].courseEnrollInfo.totalStudents} students &nbsp;`
+                  :
+                  `<div class="smalltext">`
+                  }
+                  ${card.Carddetails[i].courseEnrollInfo.startingDate !== null
+                  ? `| &nbsp;${card.Carddetails[i].courseEnrollInfo.startingDate} - ${card.Carddetails[i].courseEnrollInfo.endingDate}</div>`
+                  : `</div>`
+                  }
               </div>
           </div>
           <div class="symbol">
-              <div><img src="${card.Carddetails[i].previewimage}"></div>
-              <div class="lightimage"><img src="${card.Carddetails[i].manageimage
-        }"></div>
-              <div class="lightimage"><img src="${card.Carddetails[i].gradeimage
-        }"></div>
-              <div><img src="${card.Carddetails[i].reportimage}"></div>
+              <div><img src="image/preview.png" ${!card.Carddetails[i].previewimage
+                ?` style="opacity : 40%"`
+                :``}></div>
+              <div class="lightimage" ${!card.Carddetails[i].manageimage
+                ?` style="opacity : 40%"`
+                :``}><img src="image/manage course.png"></div>
+              <div class="lightimage" ${!card.Carddetails[i].gradeimage
+                ?` style="opacity : 40%"`
+                :``}><img src="image/grade submissions.png"></div>
+              <div><img src="image/reports.png" ${!card.Carddetails[i].reportimage
+                ?` style="opacity : 40%"`
+                :``}></div>
           </div>
         </div>`;
     }

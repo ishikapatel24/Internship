@@ -10,13 +10,17 @@ interface cardData {
       lessons: number;
       topics: number;
     };
-    classoption: string;
+    classoption:string;
     arrowimage: string;
-    totalstudents: string;
-    previewimage: string;
-    manageimage: string;
-    gradeimage: string;
-    reportimage: string
+    courseEnrollInfo:{
+      totalStudents:number,
+      startingDate:string,
+      endingDate:string
+    },
+    previewimage: boolean;
+    manageimage: boolean;
+    gradeimage: boolean;
+    reportimage: boolean
 }
 
 interface ResponseDetails{
