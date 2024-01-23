@@ -1,6 +1,8 @@
 // import card from "../Json/carddata.json";
 // import alert from "../Json/alert.json" assert { type: "json" };
 // import ann from "../Json/announcement.json" assert { type: "json" };
+import {cardData,ResponseDetails} from "./interface";
+
 
 const cardhtml = document.querySelector(".cards") as HTMLElement;
 const alerthtml = document.querySelector(".alert") as HTMLElement;
@@ -8,10 +10,11 @@ const announcementhtml = document.querySelector(".announcement") as HTMLElement;
 
 fetch("./Json/carddata.json")
   .then(function (response) {
-    return response.json();
+    return response.json() as Promise<ResponseDetails>; 
   })
   .then(function (card) {
     const cardlen = card.Carddetails.length;
+    console.log(cardlen);
     for (let i = 0; i < cardlen; i++) {
       cardhtml.innerHTML += `
           <div class="cardmain${i + 1}">
@@ -63,7 +66,7 @@ fetch("./Json/carddata.json")
         }"></div>
               <div><img src="${card.Carddetails[i].reportimage}"></div>
           </div>
-          </div>`;
+        </div>`;
     }
   });
 

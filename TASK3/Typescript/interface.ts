@@ -1,4 +1,4 @@
-export interface cardData {
+interface cardData {
     cardimage: string;
     heading: string;
     favimage: string;
@@ -18,3 +18,9 @@ export interface cardData {
     gradeimage: string;
     reportimage: string
 }
+
+interface ResponseDetails{
+  Carddetails:cardData[];
+}
+
+export {cardData,ResponseDetails};

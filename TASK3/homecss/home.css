@@ -8,6 +8,10 @@ body {
   background-color: #EEEEEE;
 }
 
+*:focus {
+  outline: none;
+}
+
 @font-face {
   font-family: "Quicksand";
   src: url(../Quicksand-Medium.ttf);
@@ -375,6 +379,7 @@ body {
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
+  margin-bottom: 5px;
 }
 
 #classdet {
