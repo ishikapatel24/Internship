@@ -3,15 +3,85 @@
 
 <head>
     <title>ToDo List</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./todo.css">
 </head>
 
 <body>
     <div class="main">
-        <div class="todo_title">TODO LIST</div>
+        <div class="todoTitle">
+            <h2>My ToDo List</h2>
+            <div class="title">
+                <input type="text" id="newItem" placeholder="Title...">
+                <span class="addButton">Add</span>
+            </div>
+        </div>
         <div class="items">
-            <li>apple</li>
+            <ul>
+                <li>Orange</li>
+                <li>Apple</li>
+
+            </ul>
         </div>
     </div>
+
+
+    <script>
+        var itemlist = document.getElementsByTagName("li");
+        console.log(itemlist);
+        var i;
+        for (i = 0; i < itemlist.length; i++) {
+            var span = document.createElement("span");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            itemlist[i].appendChild(span);
+        }
+
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function (event) {
+            if (event.target.tagName === 'LI') {
+                event.target.classList.toggle('checked');
+            }
+        }, false);
+
+        var add = document.querySelector('.addButton');
+        add.addEventListener('click', function () {
+            var li = document.createElement("li");
+            if (document.getElementById('newItem').value != "") {
+                var txt = document.createTextNode(document.getElementById('newItem').value);
+                li.appendChild(txt);
+                list.appendChild(li);
+                document.getElementById('newItem').value = "";
+                var span = document.createElement("span");
+                var txt = document.createTextNode("\u00D7");
+                span.className = "close";
+                span.appendChild(txt);
+                li.appendChild(span);
+            }
+            else {
+                alert("Add Title..");
+            }
+            var close = document.getElementsByClassName("close");
+            var i;
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        })
+
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+    </script>
+
 </body>
+
 </html>

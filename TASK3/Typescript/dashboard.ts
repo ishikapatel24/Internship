@@ -37,16 +37,20 @@ fetch("./Json/carddata.json")
                   <div class="bigtext" id="classdet">
                   ${card.Carddetails[i].classoption === null ? 
                   `<select class="option2">
-                     <option value="All Classes" selected>All Classes</option>
+                     <option value="All Classes" selected disabled hidden>All Classes</option>
+                     <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
+                     <option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
                   </select>`: ``}
                   ${card.Carddetails[i].classoption === "Mr.Frank's Class A" ?
                   `<select class="option2">
-                     <option value="Mr.Frank's Class A" selected>Mr.Frank's Class A</option>
+                     <option value="All Classes">All Classes</option>
+                     <option value="Mr.Frank's Class A" selected disabled hidden>Mr.Frank's Class A</option>
                      <option value="Mr.Frank's Class B">Mr.Frank's Class B</option>
                   </select>`: ``}
                   ${card.Carddetails[i].classoption === "Mr.Frank's Class B" ?
                   `<select class="option2">
-                     <option value="Mr.Frank's Class B" selected>Mr.Frank's Class B</option>
+                     <option value="All Classes">All Classes</option>
+                     <option value="Mr.Frank's Class B" selected disabled hidden>Mr.Frank's Class B</option>
                      <option value="Mr.Frank's Class A">Mr.Frank's Class A</option>
                   </select>`: ``}
                   ${card.Carddetails[i].classoption === "" ? 
