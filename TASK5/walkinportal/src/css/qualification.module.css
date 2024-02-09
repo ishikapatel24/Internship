@@ -1,0 +1,310 @@
+.section {
+  padding: 0rem 1.5rem 0rem 1.5rem;
+}
+
+.qualificationsInfo .eduTitle,
+.qualificationsInfo .profTitle {
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  background-color: #dbefff;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1607843137);
+}
+.qualificationsInfo .eduTitle .title,
+.qualificationsInfo .profTitle .title {
+  padding-left: 1.5rem;
+}
+.qualificationsInfo .eduTitle .img,
+.qualificationsInfo .profTitle .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  width: 2.1rem;
+  margin-left: auto;
+  border-left: 1.5px solid #b3afaf;
+  cursor: pointer;
+}
+.qualificationsInfo .eduTitle .img img,
+.qualificationsInfo .profTitle .img img {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+.qualificationsInfo .eduQualification,
+.qualificationsInfo .profQualification,
+.qualificationsInfo .profQualificationExp {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+}
+.qualificationsInfo .eduQualification .inp,
+.qualificationsInfo .profQualification .inp,
+.qualificationsInfo .profQualificationExp .inp {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .eduQualification .inp p,
+.qualificationsInfo .profQualification .inp p,
+.qualificationsInfo .profQualificationExp .inp p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .inp .eduQualificationDetail,
+.qualificationsInfo .eduQualification .inp .profQualificationDetail,
+.qualificationsInfo .profQualification .inp .eduQualificationDetail,
+.qualificationsInfo .profQualification .inp .profQualificationDetail,
+.qualificationsInfo .profQualificationExp .inp .eduQualificationDetail,
+.qualificationsInfo .profQualificationExp .inp .profQualificationDetail {
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .eduQualification .inp .eduQualificationDetail input,
+.qualificationsInfo .eduQualification .inp .profQualificationDetail input,
+.qualificationsInfo .profQualification .inp .eduQualificationDetail input,
+.qualificationsInfo .profQualification .inp .profQualificationDetail input,
+.qualificationsInfo .profQualificationExp .inp .eduQualificationDetail input,
+.qualificationsInfo .profQualificationExp .inp .profQualificationDetail input {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 20%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .eduQualification .inp .eduQualificationDetail select,
+.qualificationsInfo .eduQualification .inp .profQualificationDetail select,
+.qualificationsInfo .profQualification .inp .eduQualificationDetail select,
+.qualificationsInfo .profQualification .inp .profQualificationDetail select,
+.qualificationsInfo .profQualificationExp .inp .eduQualificationDetail select,
+.qualificationsInfo .profQualificationExp .inp .profQualificationDetail select {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 20%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .eduQualification .inpLast p,
+.qualificationsInfo .profQualification .inpLast p,
+.qualificationsInfo .profQualificationExp .inpLast p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .inpLast .profQualificationDetailRadio,
+.qualificationsInfo .profQualification .inpLast .profQualificationDetailRadio,
+.qualificationsInfo .profQualificationExp .inpLast .profQualificationDetailRadio {
+  display: flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .eduQualification .inpLast .profQualificationDetailRadio input,
+.qualificationsInfo .profQualification .inpLast .profQualificationDetailRadio input,
+.qualificationsInfo .profQualificationExp .inpLast .profQualificationDetailRadio input {
+  height: 1.1rem;
+  width: 1.1rem;
+  accent-color: #1F7A54;
+  cursor: pointer;
+}
+.qualificationsInfo .eduQualification .inpLast .profQualificationDetailRadio input:nth-child(2),
+.qualificationsInfo .profQualification .inpLast .profQualificationDetailRadio input:nth-child(2),
+.qualificationsInfo .profQualificationExp .inpLast .profQualificationDetailRadio input:nth-child(2) {
+  margin-left: 1.3rem;
+}
+.qualificationsInfo .eduQualification .inpLast .eduQualificationDetail,
+.qualificationsInfo .profQualification .inpLast .eduQualificationDetail,
+.qualificationsInfo .profQualificationExp .inpLast .eduQualificationDetail {
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .eduQualification .inpLast .eduQualificationDetail input,
+.qualificationsInfo .profQualification .inpLast .eduQualificationDetail input,
+.qualificationsInfo .profQualificationExp .inpLast .eduQualificationDetail input {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 20%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .eduQualification .inpLast .profQualificationDetail,
+.qualificationsInfo .profQualification .inpLast .profQualificationDetail,
+.qualificationsInfo .profQualificationExp .inpLast .profQualificationDetail {
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .eduQualification .inpLast .profQualificationDetail input,
+.qualificationsInfo .profQualification .inpLast .profQualificationDetail input,
+.qualificationsInfo .profQualificationExp .inpLast .profQualificationDetail input {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 45%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .eduQualification .eduDetail,
+.qualificationsInfo .profQualification .eduDetail,
+.qualificationsInfo .profQualificationExp .eduDetail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.qualificationsInfo .eduQualification .eduDetail .Other,
+.qualificationsInfo .profQualification .eduDetail .Other,
+.qualificationsInfo .profQualificationExp .eduDetail .Other {
+  margin-top: 0.1rem;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv,
+.qualificationsInfo .profQualification .eduDetail .gridDiv,
+.qualificationsInfo .profQualificationExp .eduDetail .gridDiv {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv p,
+.qualificationsInfo .profQualification .eduDetail .gridDiv p,
+.qualificationsInfo .profQualificationExp .eduDetail .gridDiv p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv .eduInfo,
+.qualificationsInfo .profQualification .eduDetail .gridDiv .eduInfo,
+.qualificationsInfo .profQualificationExp .eduDetail .gridDiv .eduInfo {
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv .eduInfo input,
+.qualificationsInfo .profQualification .eduDetail .gridDiv .eduInfo input,
+.qualificationsInfo .profQualificationExp .eduDetail .gridDiv .eduInfo input {
+  font-size: 1em;
+  font-weight: 600;
+  width: 90%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv .eduInfo select,
+.qualificationsInfo .profQualification .eduDetail .gridDiv .eduInfo select,
+.qualificationsInfo .profQualificationExp .eduDetail .gridDiv .eduInfo select {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 90%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+  cursor: pointer;
+}
+
+.qualificationsInfo .profQualificationExp .expertiseTechnology,
+.qualificationsInfo .profQualificationExp .familiarTechnology {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technologyTitle,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technologyTitle {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technologyCheckbox,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technologyCheckbox {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technologyCheckbox .cheboxes,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technologyCheckbox .cheboxes {
+  font-size: 1rem;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technologyCheckbox .cheboxes input,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technologyCheckbox .cheboxes input {
+  height: 1.1rem;
+  width: 1.1rem;
+  accent-color: #1f7a54;
+  cursor: pointer;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .other,
+.qualificationsInfo .profQualificationExp .familiarTechnology .other {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technology,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technology {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technology input,
+.qualificationsInfo .profQualificationExp .familiarTechnology .technology input {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 45%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod,
+.qualificationsInfo .profQualificationExp .testDetail .isTest {
+  margin-bottom: 1.1rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod p,
+.qualificationsInfo .profQualificationExp .testDetail .isTest p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod .profQualificationDetailRadio,
+.qualificationsInfo .profQualificationExp .testDetail .isTest .profQualificationDetailRadio {
+  display: flex;
+  align-items: center;
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod .profQualificationDetailRadio input,
+.qualificationsInfo .profQualificationExp .testDetail .isTest .profQualificationDetailRadio input {
+  height: 1.1rem;
+  width: 1.1rem;
+  accent-color: #1f7a54;
+  cursor: pointer;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod .profQualificationDetailRadio input:nth-child(2),
+.qualificationsInfo .profQualificationExp .testDetail .isTest .profQualificationDetailRadio input:nth-child(2) {
+  margin-left: 1.5rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod .profQualificationDetail,
+.qualificationsInfo .profQualificationExp .testDetail .isTest .profQualificationDetail {
+  margin-top: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo .profQualificationDetail {
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo .profQualificationDetail input {
+  font-size: 1rem;
+  font-weight: 600;
+  width: 90%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo .profQualificationDetail select {
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 90%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666666;
+}/*# sourceMappingURL=qualification.module.css.map */

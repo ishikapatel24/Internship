@@ -1,0 +1,377 @@
+.jobOpening{
+    width: auto;
+    height: auto;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 6px #0000003D;
+    margin-bottom: 1.5rem;
+}
+.jobOpening .jobSection{
+    position: relative;
+    padding: 1.1rem;
+    .expireDay{
+        position: absolute;
+        top: -0.6rem;
+        right: 1.7rem;
+        font-size: 0.7rem;
+        color: #D10107;
+        background-color: #FFE4E6;
+        border-radius: 2px;
+        padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+        font-weight: bold;
+    }
+    .title{
+        display: flex;
+        flex-direction: row;
+    }
+    .jobOpeningtitle{
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+    .applyBtn{
+        margin-left: auto;
+        outline: none;
+        border: none;
+        font-weight: 600;
+        background-color: #3fd28b;
+        border-radius: 2px;
+        box-shadow: 0px 3px 5px #0000003D;
+        cursor: pointer;
+        padding: 0.4rem 1.1rem 0.4rem 1.1rem;
+    }
+    .dateHeading{
+        color: #666666;
+        font-size: 0.75rem;
+        margin: 1rem 0rem 0.5rem 0rem;
+    }
+    .dateDetails{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-bottom: 1rem;
+        border-bottom: 0.5px solid #edeaea;
+        .dateValue{
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding-right: 0.8rem;
+            border-right: 0.6px solid #edeaea;
+        }
+        .location{
+            font-size: 0.75rem;
+            color: #666666;
+        }
+        img{
+            padding-left: 0.8rem;
+            padding-right: 0.2rem;
+            opacity: 60%;
+            height: 0.8rem;
+        }
+    }
+    .jobRolesHeading{
+        font-size: 0.75rem;
+        color: #666666;
+        margin-top: 1rem;
+    }
+    .jobRoles{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 0.5rem;
+        div{
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            margin-bottom: 0.3rem;
+            img{
+                height: 1rem;
+                width: 1rem;
+                padding: 0.1rem;
+                border-radius: 50%;
+                border: 1px solid black;
+            }
+            .jobRoleName{
+                color: #1F7A54;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-left: 0.5rem;
+                margin-right: 1rem;
+                margin-top: 0.25rem;
+            }
+        }
+    }
+    .internshipOpportunity{
+        margin-top: 0.8rem;
+        font-size: 0.65rem;
+        width: fit-content;
+        background-color: #EEDD6B;
+        padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+        border-radius: 9px;
+    }
+    .viewDetails{
+      display: flex;
+      margin: 1.5rem auto 0rem auto;
+      background-color: #3FD28B;
+      border-radius: 0.1rem;
+      font-size: 0.85rem;
+      padding: 0.3rem 1rem 0.3rem 1rem;
+      border: none;
+      box-shadow: 0px 3px 5px #0000003D;
+      cursor: pointer;
+    }
+}
+
+
+.jobOpening .moreInfoBtn {
+    width: 100%;
+    display: flex;
+    background-color: #dbefff;
+    .infoTitle {
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.7rem 1.1rem 0.7rem 1.1rem;
+    }
+    .infoBtn {
+      margin-left: auto;
+      height: auto;
+      width: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 1.5px solid #b3afaf;
+      cursor: pointer;
+      img {
+        height: 0.8rem;
+        width: 0.8rem;
+      }
+  }
+}
+
+.jobOpening .jobInfo {
+    max-height: 0rem;
+    transition: max-height 0.5s ease-in-out;
+    padding: 0 1.1rem 0 1.1rem;
+    overflow: hidden;
+    div {
+      padding: 1rem 0rem 1rem 0rem;
+      p:nth-child(1) {
+        color: #666666;
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      p:nth-child(2) {
+        color: black;
+        font-size: 0.85rem;
+        line-height: 1.6rem;
+      }
+    }
+}
+
+.timeSlotPref {
+    width: auto;
+    height: auto;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 6px #0000003D;
+    margin-bottom: 1.5rem;
+    padding: 1.1rem;
+    .timeSlotPrefTitle {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .timeSlot,
+    .pref {
+      margin-top: 1.4rem;
+      p {
+        font-size: 0.75rem;
+        color: #666666;
+        margin-bottom: 1.2rem;
+      }
+      .inp {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        input {
+          accent-color: #1f7a54;
+        }
+        input[type="radio"],input[type="checkbox"]{
+            height: 1rem;
+            width: 1rem;
+            margin-right: 0.4rem;
+            cursor: pointer;
+        }
+      }
+    }
+    .resumeUpload {
+      display: flex;
+      align-items: center;
+      padding-top: 0.8rem;
+      .custom{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: #1f7a54;
+        font-weight: 600;
+        font-size: 0.85rem;
+        .image {
+          img {
+              height: 1.7rem;
+              width: 2.3rem;
+          }
+        }
+      }
+      p{
+        font-size: 1rem;
+        margin-left: 0.5rem;
+        font-weight: 600;
+      }
+    }
+}
+
+.jobDetails {
+    width: auto;
+    height: auto;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 6px #0000003D;
+    margin-bottom: 1.5rem;
+}
+
+.jobDetails > .moreInfoBtn {
+    width: 100%;
+    display: flex;
+    background-color: #dbefff;
+    .infoTitle {
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 1.2rem 1.1rem 1.2rem 1.1rem;
+    }
+    .infoBtn {
+        margin-left: auto;
+        height: auto;
+        width: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-left: 1.5px solid #b3afaf;
+        cursor: pointer;
+        img {
+          height: 0.8rem;
+          width: 0.8rem;
+        }
+    }
+}
+  
+.jobDetails .jobInfo {
+    max-height: 0rem;
+    overflow: hidden;
+    padding: 0rem 1.1rem 0rem 1.1rem;
+    background-color: white;
+    transition: max-height 0.5s ease-in-out;
+    div {
+      padding: 1rem 0rem 1rem 0rem;
+      p:nth-child(1) {
+        color: #666666;
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      p:nth-child(2) {
+        color: black;
+        font-size: 0.85rem;
+        line-height: 1.6rem;
+      }
+    }
+}
+
+.jobOpening .jobToggle {
+  max-height: 100rem;
+  transition: max-height 0.5s ease-in-out;
+}
+  
+.jobDetails .jobInfoToggle {
+  max-height: 100rem;
+  transition: max-height 0.5s ease-in-out;
+}
+
+@media only screen and (min-width:280px) and (max-width: 450px) {
+  .jobOpening .jobSection{
+    .title {
+      .applyBtn {
+        height: 3rem;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+  .jobOpening .moreInfoBtn .infoTitle{
+    font-size: 0.9rem;
+  }
+  .jobDetails > .moreInfoBtn .infoTitle{
+    font-size: 0.9rem;
+  }
+}
+
+
+// *** HALL TICKET
+
+.appliedDetails {
+  margin-top: 4rem;
+  background-color: white;
+  border-radius: 0.1rem;
+  box-shadow: 0px 4px 6px #0000003D;
+  padding: 1.1rem;
+  position: relative;
+  .checkImage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 7rem;
+      height: 7rem;
+    }
+    position: absolute;
+    top: -3.8rem;
+    left: -0.1rem;
+  }
+  .appliedMsg {
+    text-align: center;
+    margin-top: 3.4rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+  }
+  .dateTime,
+  .address,
+  .thingsToRemember {
+    margin-top: 1rem;
+    margin-bottom: 0.9rem;
+    .title {
+      color: #666666;
+      font-size: 0.8rem;
+    }
+    .date,
+    .time,
+    .venue,
+    .points {
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+      line-height: 1.4rem;
+    }
+  }
+  .DownloadBtn {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+    button {
+      height: 2.2rem;
+      width: 13rem;
+      outline: none;
+      border: none;
+      background-color: #3fd28b;
+      border-radius: 0.2rem;
+      box-shadow: 0px 3px 5px #0000003D;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+  }
+}

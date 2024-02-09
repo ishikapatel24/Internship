@@ -1,0 +1,357 @@
+.registerNavbar .navbarItems {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #3C4E62;
+  padding: 0 1.5rem 0rem 1.5rem;
+  height: 3rem;
+}
+.registerNavbar .navbarItems .backImg {
+  display: flex;
+  align-items: center;
+}
+.registerNavbar .navbarItems .backImg img {
+  cursor: pointer;
+  height: 1.5rem;
+  width: 1.5rem;
+  filter: brightness(2);
+}
+.registerNavbar .navbarItems .title {
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: lighter;
+}
+.registerNavbar .navbarItems .btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.registerNavbar .navbarItems .btns button {
+  padding: 0.35rem 1.3rem 0.35rem 1.3rem;
+  margin-left: 1rem;
+  background-color: #3FD28B;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  border: none;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2392156863);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.container {
+  padding: 1.5rem;
+}
+
+.standUpDetails {
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  height: 1.8rem;
+}
+.standUpDetails hr {
+  width: 28%;
+  border: 0.18vh solid #eeeeee;
+}
+.standUpDetails .detailsOverview {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.standUpDetails .detailsOverview .number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.1rem;
+  margin-right: 0.5rem;
+  background-color: #3fd28b;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.standUpDetails .detailsOverview .number img {
+  height: 1rem;
+  width: 1rem;
+}
+.standUpDetails .detailsOverview p {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.standUpDetails .qualifications {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.standUpDetails .qualifications .number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.1rem;
+  margin-right: 0.5rem;
+  background-color: #3fd28b;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.standUpDetails .qualifications .number img {
+  height: 1rem;
+  width: 1rem;
+}
+.standUpDetails .qualifications p {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.section {
+  padding: 0rem 1.5rem 0rem 1.5rem;
+}
+
+.personalInfoTitle, .qualificationsInfoTitle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+.personalInfoTitle .editDiv, .qualificationsInfoTitle .editDiv {
+  display: flex;
+  align-items: center;
+  color: #1F7A54;
+  cursor: pointer;
+}
+.personalInfoTitle .editDiv img, .qualificationsInfoTitle .editDiv img {
+  height: 1.1rem;
+  width: 1.1rem;
+  padding-right: 0.4rem;
+}
+
+.personalInfo {
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.personalInfo .nameDetails .inp {
+  margin-bottom: 2.5rem;
+}
+.personalInfo .nameDetails .inp p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.personalInfo .nameDetails .inp .personalDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.personalInfo .nameDetails .PhoneNumber {
+  margin-bottom: 2.5rem;
+}
+.personalInfo .nameDetails .PhoneNumber > p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.personalInfo .nameDetails .PhoneNumber .number {
+  margin-top: 0.8rem;
+  display: flex;
+  font-weight: 600;
+}
+.personalInfo .nameDetails .PhoneNumber .number p {
+  margin-right: 0.2rem;
+}
+.personalInfo .nameDetails .PhoneNumber .number .personalDetail {
+  font-size: 1rem;
+}
+.personalInfo .nameDetails .resumeUpload {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  cursor: pointer;
+}
+.personalInfo .nameDetails .resumeUpload .image img {
+  height: 1.7rem;
+  width: 2.3rem;
+}
+.personalInfo .nameDetails .resumeUpload button {
+  color: #222222;
+  background-color: white;
+  outline: none;
+  border: none;
+  font-weight: 600;
+  margin-left: 0.2rem;
+  font-size: 0.85rem;
+}
+.personalInfo .nameDetails .resumeUpload .resumeDetail {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 0.6rem;
+}
+.personalInfo .nameDetails .pref {
+  margin-bottom: 2.5rem;
+}
+.personalInfo .nameDetails .pref p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.personalInfo .nameDetails .pref .preferredJobRoleDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.personalInfo .nameDetails .checkBox {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.personalInfo .nameDetails .checkBox input {
+  height: 1rem;
+  width: 1rem;
+  accent-color: black;
+  margin-right: 0.4rem;
+}
+
+.imageDetails {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+.imageDetails .personalImg img {
+  border-radius: 50%;
+  height: 8rem;
+  width: 8rem;
+}
+
+.qualificationsInfo .eduTitle, .qualificationsInfo .profTitle {
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  background-color: #DBEFFF;
+  font-size: 1rem;
+  padding: 0rem 1.5rem 0rem 1.5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1607843137);
+}
+.qualificationsInfo .eduQualification, .qualificationsInfo .profQualification, .qualificationsInfo .profQualificationExp {
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+}
+.qualificationsInfo .eduQualification .inp, .qualificationsInfo .profQualification .inp, .qualificationsInfo .profQualificationExp .inp {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .eduQualification .inp p, .qualificationsInfo .profQualification .inp p, .qualificationsInfo .profQualificationExp .inp p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .inp .eduQualificationDetail, .qualificationsInfo .eduQualification .inp .profQualificationDetail, .qualificationsInfo .profQualification .inp .eduQualificationDetail, .qualificationsInfo .profQualification .inp .profQualificationDetail, .qualificationsInfo .profQualificationExp .inp .eduQualificationDetail, .qualificationsInfo .profQualificationExp .inp .profQualificationDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .eduQualification .inpLast p, .qualificationsInfo .profQualification .inpLast p, .qualificationsInfo .profQualificationExp .inpLast p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .inpLast .eduQualificationDetail, .qualificationsInfo .eduQualification .inpLast .profQualificationDetail, .qualificationsInfo .profQualification .inpLast .eduQualificationDetail, .qualificationsInfo .profQualification .inpLast .profQualificationDetail, .qualificationsInfo .profQualificationExp .inpLast .eduQualificationDetail, .qualificationsInfo .profQualificationExp .inpLast .profQualificationDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .eduQualification .eduDetail, .qualificationsInfo .profQualification .eduDetail, .qualificationsInfo .profQualificationExp .eduDetail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv, .qualificationsInfo .profQualification .eduDetail .gridDiv, .qualificationsInfo .profQualificationExp .eduDetail .gridDiv {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv p, .qualificationsInfo .profQualification .eduDetail .gridDiv p, .qualificationsInfo .profQualificationExp .eduDetail .gridDiv p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .eduQualification .eduDetail .gridDiv .eduInfo, .qualificationsInfo .profQualification .eduDetail .gridDiv .eduInfo, .qualificationsInfo .profQualificationExp .eduDetail .gridDiv .eduInfo {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.qualificationsInfo .profQualificationExp .expertiseTechnology, .qualificationsInfo .profQualificationExp .familiarTechnology {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technologyTitle, .qualificationsInfo .profQualificationExp .familiarTechnology .technologyTitle {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .other, .qualificationsInfo .profQualificationExp .familiarTechnology .other {
+  font-size: 0.75rem;
+  color: #666666;
+  margin-top: 0.8rem;
+}
+.qualificationsInfo .profQualificationExp .expertiseTechnology .technology, .qualificationsInfo .profQualificationExp .familiarTechnology .technology {
+  margin-top: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod, .qualificationsInfo .profQualificationExp .testDetail .isTest {
+  margin-bottom: 1.1rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod p, .qualificationsInfo .profQualificationExp .testDetail .isTest p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriodDiv .isNoticePeriod .profQualificationDetail, .qualificationsInfo .profQualificationExp .testDetail .isTest .profQualificationDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo {
+  margin-bottom: 2.5rem;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo p {
+  font-size: 0.75rem;
+  color: #666666;
+}
+.qualificationsInfo .profQualificationExp .noticePeriod .noticePeriodInfo .profQualificationDetail {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.prevBtn {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.previous {
+  background-color: #3FD28B;
+  border-radius: 2px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2392156863);
+  height: 2rem;
+  width: 7rem;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1000px) and (max-width: 1300px) {
+  .standUpDetails hr {
+    width: 20%;
+  }
+}/*# sourceMappingURL=register.module.css.map */
