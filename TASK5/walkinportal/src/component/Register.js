@@ -6,7 +6,61 @@ import Qualification from "./Qualification";
 import Review from "./Review";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from 'axios';
+import * as Yup from "yup";
+
+const personalDetailSchema = Yup.object().shape({
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  phoneCode: Yup.string().required("Phone Code is required"),
+  phoneNumber: Yup.string().required("Phone Number is required"),
+  portfoliourl: Yup.string().url("Invalid URL"),
+  referralName: Yup.string(),
+  jobRoleRes: Yup.array().min(1, "Select at least one job role"),
+});
+
+const qualificationDetailSchema = Yup.object().shape({
+  percentage: Yup.string().required("Percentage is required"),
+  location: Yup.string().required("Loaction is required"),
+  otherCollege: Yup.string(),
+  isAppearedTest: Yup.string().required("Test Appeared is required"),
+  expertOther: Yup.string(),
+  familiarOther: Yup.string(),
+  applyRole: Yup.string(),
+  applicant: Yup.string().required("Applicant Type is required"),
+
+  yearOfExp: Yup.string().when("applicant", {
+    is: "experienced",
+    then: (schema) => schema.required("Year Of experience is required"),
+    otherwise: (schema) => schema,
+  }),
+  currentCTC: Yup.string().when("applicant", {
+    is: "experienced",
+    then: (schema) => schema.required("Current CTC is required"),
+    otherwise: (schema) => schema,
+  }),
+  expCTC: Yup.string().when("applicant", {
+    is: "experienced",
+    then: (schema) => schema.required("Expected CTC is required"),
+    otherwise: (schema) => schema,
+  }),
+
+  curNoticePeriod: Yup.string().when("applicant", {
+    is: "experienced",
+    then: (schema) => schema.required("Cureent Notice Period is required"),
+    otherwise: (schema) => schema,
+  }),
+  endNoticePeriod: Yup.string().when("curNoticePeriod", {
+    is: "Yes",
+    then: (schema) => schema.required("End Notice Period is required"),
+    otherwise: (schema) => schema,
+  }),
+  expertTechnology: Yup.array().when("applicant", {
+    is: "experienced",
+    then: (schema) => schema.min(1, "Select at least one Technology"),
+    otherwise: (schema) => schema,
+  }),
+});
 
 export default function Register() {
   const { id } = useParams();
@@ -58,44 +112,23 @@ export default function Register() {
   const goQualification = (event) => {
     event.preventDefault();
     if (page === 0) {
-      if (
-        !formData.firstName ||
-        !formData.lastName ||
-        !formData.phoneCode ||
-        !formData.phoneNumber ||
-        !formData.email ||
-        !formData.jobRoleRes.length
-      )
-        alert("Please Fill Mandatory Details");
-      else {
-        setPage((currPage) => currPage + 1);
-      }
+      personalDetailSchema
+        .validate(formData, { abortEarly: false })
+        .then(() => {
+          setPage((currPage) => currPage + 1);
+        })
+        .catch((validationErrors) => {
+          alert("Please Fill Properly or Mandatory Details");
+        });
     } else if (page === 1) {
-      const exp =
-        formData.applicant === "experienced"
-          ? formData.yearOfExp &&
-            formData.expertTechnology.length &&
-            formData.currentCTC &&
-            formData.expCTC &&
-            formData.curNoticePeriod &&
-            (formData.curNoticePeriod === "Yes" ? formData.endNoticePeriod : true)
-          : true;
-      if (
-        !formData.percentage ||
-        !formData.yearOfPassing ||
-        !formData.college ||
-        !formData.stream ||
-        !formData.qualification ||
-        !formData.location ||
-        !formData.applicant ||
-        !exp ||
-        !formData.isAppearedTest ||
-        (formData.isAppearedTest==="Yes" ? !formData.applyRole : false)
-      )
-        alert("Please Fill Mandatory Details");
-      else {
-        setPage((currPage) => currPage + 1);
-      }
+      qualificationDetailSchema
+        .validate(formData, { abortEarly: false })
+        .then(() => {
+          setPage((currPage) => currPage + 1);
+        })
+        .catch((validationErrors) => {
+          alert("Please Fill Properly or Mandatory Details");
+        });
     }
   };
 
@@ -112,7 +145,7 @@ export default function Register() {
   return (
     <>
       <Navbar userLogo={false} />
-      
+
       <div className={style.registerNavbar}>
         <div className={style.navbarItems}>
           <div className={style.backImg}>
