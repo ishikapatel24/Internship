@@ -6,9 +6,38 @@ import InstructionalDesigner from "../image/Instructional Designer.png";
 import SoftwareQualityEngineer from "../image/Software Quality Engineer.png";
 import jobOpening from "../json/jobOpening";
 import Navbar from "./Navbar";
+import { gql, useQuery } from "@apollo/client";
+
+const query = gql`
+  query Query($jobOpeningId: String!) {
+    getJobOpening(ID: $jobOpeningId) {
+      Job_title
+      Start_date
+      End_date
+      Office_location
+      Is_expire
+      jobOpeningJobRoleMap {
+        Package
+        jobRole {
+          Job_role_name
+        }
+      }
+      additionalDetails {
+        General_Instructions
+      }
+      application {
+        jobOpenningTimeSlot {
+          Time_slot_start
+          Time_slot_end
+        }
+      }
+    }
+  }
+`;
 
 export default function Jobopeningdetails() {
   const { id } = useParams();
+
   const navigate = useNavigate();
   const startDate = jobOpening[id].date.startDate;
 
@@ -74,21 +103,29 @@ export default function Jobopeningdetails() {
     setUpdatedResume(event.target.files[0].name);
   };
 
+  const jobOpeningId = id;
+  const { data, error, loading } = useQuery(query, {
+    variables: { jobOpeningId },
+  });
+  if (loading) return <h1>Loading...</h1>;
+  if (error) console.log(error);
+  // else console.log(data.getJobOpening[0]);
+
+  const item = data.getJobOpening[0];
+
   return (
     <>
       <Navbar userLogo={true} />
       <section className="jobOpeningList">
         <div className={style.jobOpening}>
           <div className={style.jobSection}>
-            {/* {props.isExpireDay ? (
-            <div className={style.expireDay}>Expires in 5 days</div>
-          ) : (
-            ""
-          )} */}
+            {item.Is_expire ? (
+              <div className={style.expireDay}>Expires in 5 days</div>
+            ) : (
+              ""
+            )}
             <div className={style.title}>
-              <div className={style.jobOpeningtitle}>
-                {jobOpening[id].jobOpeningTitle}
-              </div>
+              <div className={style.jobOpeningtitle}>{item.Job_title}</div>
 
               <button
                 className={style.applyBtn}
@@ -104,58 +141,24 @@ export default function Jobopeningdetails() {
             <div className={style.dateHeading}>Date & Time :</div>
             <div className={style.dateDetails}>
               <div className={style.dateValue}>
-                {jobOpening[id].date.startDate} to {jobOpening[id].date.endDate}
+                {item.Start_date} to {item.End_date}
               </div>
               <img src={location} alt="" />
-              <div className={style.location}>
-                {jobOpening[id].officeLocation}
-              </div>
+              <div className={style.location}>{item.Office_location}</div>
             </div>
 
             <div className={style.jobRolesHeading}>Job Roles :</div>
 
             <div className={style.jobRoles}>
-              {jobOpening[id].jobRoles.isInstructionalDesigner ? (
-                <div>
+              {item.jobOpeningJobRoleMap.map((jobroles, indexs) => (
+                <div key={indexs}>
                   <img src={InstructionalDesigner} alt="" />
                   <div className={style.jobRoleName}>
-                    Instructional Designer
+                    {jobroles.jobRole[0].Job_role_name}
                   </div>
                 </div>
-              ) : (
-                ""
-              )}
-
-              {jobOpening[id].jobRoles.isSoftwareEngineer ? (
-                <div>
-                  <img src={InstructionalDesigner} alt="" />
-                  <div className={style.jobRoleName}>Software Engineer</div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {jobOpening[id].jobRoles.isSoftwareQualityEngineer ? (
-                <div>
-                  <img src={SoftwareQualityEngineer} alt="" />
-                  <div className={style.jobRoleName}>
-                    Software Quality Engineer
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
+              ))}
             </div>
-
-            {jobOpening[id].isInternshipOpportunityforMCA ? (
-              <div className={style.internshipOpportunity}>
-                Internship Opportunity for MCA Students
-              </div>
-            ) : (
-              ""
-            )}
-
-            {/* <button className={style.viewDetails}>VIEW MORE DETAILS</button> */}
           </div>
           <div className={style.moreInfoBtn}>
             <div className={style.infoTitle}>
@@ -178,13 +181,7 @@ export default function Jobopeningdetails() {
           <div className={`${style.jobInfo} ${isOpen ? style.jobToggle : ""}`}>
             <div className={style.generalInfo}>
               <p>General Instruction :</p>
-              <p>
-                - We have a two-year indemnity for permanent candidates. We will
-                provide training to the selected candidates. <br />- Candidates
-                who have appeared for any test held by Zeus Learning in the past
-                12 months will not be allowed to appear for this recruitment
-                test.
-              </p>
+              <p>{item.additionalDetails[0].General_Instructions}</p>
             </div>
             <hr />
             <div className={style.infoForExam}>
@@ -268,41 +265,14 @@ export default function Jobopeningdetails() {
           <hr />
           <div className={style.pref}>
             <p>Select Your Preference :</p>
-            {/* <div className={style.inp}>
-              <input
-                type="checkbox"
-                name="roles"
-                value="ID"
-                onChange={handleCheckboxChange}
-              />
-              Instructional Designer
-            </div>
-            <div className={style.inp}>
-              <input
-                type="checkbox"
-                name="roles"
-                value="SE"
-                onChange={handleCheckboxChange}
-              />
-              Software Engineer
-            </div>
-            <div className={style.inp}>
-              <input
-                type="checkbox"
-                name="roles"
-                value="SQE"
-                onChange={handleCheckboxChange}
-              />
-              Software Quality Engineer
-            </div> */}
-            {jobRole.map((item, index) => (
-              <div key={index} className={style.inp}>
+            {item.jobOpeningJobRoleMap.map((jobroles, indexs) => (
+              <div key={indexs} className={style.inp}>
                 <input
                   value={item}
                   type="checkbox"
                   onChange={handleCheckboxChange}
                 />
-                {item}
+                {jobroles.jobRole[0].Job_role_name}
               </div>
             ))}
           </div>
@@ -315,18 +285,22 @@ export default function Jobopeningdetails() {
                   alt=""
                 />
               </div>
-              <input type="file" name="resumeFile" onChange={handleResumeData} />
+              <input
+                type="file"
+                name="resumeFile"
+                onChange={handleResumeData}
+              />
               UPLOAD UPDATED RESUME
             </label>
             <p>{updatedResume}</p>
           </div>
         </div>
 
-        {jobRole.map((item, index) => (
+        {item.jobOpeningJobRoleMap.map((jobroles, index) => (
           <div className={style.jobDetails} key={index}>
             <div className={style.moreInfoBtn}>
               <div className={style.infoTitle}>
-                <p>{jobRole[index]}</p>
+                <p>{jobroles.jobRole[0].Job_role_name}</p>
               </div>
               <div
                 className={style.infoBtn}
@@ -352,7 +326,7 @@ export default function Jobopeningdetails() {
             >
               <div className={style.generalInfo}>
                 <p>compensation package :</p>
-                <p>Rs. 5,00,000 lpa</p>
+                <p>Rs. {item.jobOpeningJobRoleMap[index].Package} lpa</p>
               </div>
               <hr />
               <div className={style.roleDescription}>

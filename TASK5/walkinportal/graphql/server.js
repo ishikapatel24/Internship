@@ -112,15 +112,39 @@ const resolvers = {
   Query: {
     async getUserDetails(_, args) {
       const users = await getUserDetails();
-      return users.filter((user) => user.User_ID === args.ID);
+      return users.filter((user) => String(user.User_ID) === args.ID);
+    },
+    async getJobopening() {
+      const jobLists = await getJobOpening();
+      return jobLists;
     },
     async getJobOpening(_, args) {
       const jobLists = await getJobOpening();
-      return jobLists.filter((jobList) => jobList.Job_opening_ID === args.ID);
+      return jobLists.filter(
+        (jobList) => String(jobList.Job_opening_ID) === args.ID
+      );
     },
     async getUserLoginDetails(_, args) {
       const userLoginDetails = await getUserLoginDetails();
-      return userLoginDetails.filter((userLoginDetail) => userLoginDetail.Email_ID === args.UserName);
+      return userLoginDetails.filter(
+        (userLoginDetail) => userLoginDetail.Email_ID === args.UserName
+      );
+    },
+    async getCollege() {
+      const College = await getcollege();
+      return College;
+    },
+    async getStream() {
+      const Stream = await getstream();
+      return Stream;
+    },
+    async getQualification() {
+      const Qualification = await getqualification();
+      return Qualification;
+    },
+    async getTechnology() {
+      const Technology = await getTechnology();
+      return Technology;
     },
   },
   UserDetails: {
@@ -144,7 +168,9 @@ const resolvers = {
     },
     async familiarTechnology(parent) {
       const technologies = await getFamiliarTechnology();
-      return technologies.filter((technology) => technology.User_ID === parent.User_ID);
+      return technologies.filter(
+        (technology) => technology.User_ID === parent.User_ID
+      );
     },
   },
   JobOpening: {
@@ -169,18 +195,22 @@ const resolvers = {
       );
     },
   },
-  EducationalQualification:{
+  EducationalQualification: {
     async qualification(parent) {
       const quals = await getqualification();
       return quals.find((qual) => qual.ID === parent.qualification_ID);
-    }, 
+    },
     async stream(parent) {
       const streamNames = await getstream();
-      return streamNames.find((streamName) => streamName.ID === parent.Stream_ID);
+      return streamNames.find(
+        (streamName) => streamName.ID === parent.Stream_ID
+      );
     },
     async college(parent) {
       const collegeNames = await getcollege();
-      return collegeNames.find((collegeName) => collegeName.ID === parent.College_ID);
+      return collegeNames.find(
+        (collegeName) => collegeName.ID === parent.College_ID
+      );
     },
   },
   JobOpeningJobRoleMap: {
@@ -193,19 +223,137 @@ const resolvers = {
     async jobOpenningTimeSlot(parent) {
       const timeSlots = await getJobOpenningTimeSlot();
       // console.log(parent.Time_slot_ID);
-      return timeSlots.filter((timeSlot) => timeSlot.ID === parent.Time_slot_ID);
+      return timeSlots.filter(
+        (timeSlot) => timeSlot.ID === parent.Time_slot_ID
+      );
     },
   },
-  ExpertTechnology:{
+  ExpertTechnology: {
     async technology(parent) {
       const technology = await getTechnology();
-      return technology.filter((tech) => tech.ID === parent.User_expert_technologies_ID);
+      return technology.filter(
+        (tech) => tech.ID === parent.User_expert_technologies_ID
+      );
     },
   },
-  FamiliarTechnology:{
+  FamiliarTechnology: {
     async technology(parent) {
       const technology = await getTechnology();
-      return technology.filter((tech) => tech.ID === parent.User_familiar_technologies_ID);
+      return technology.filter(
+        (tech) => tech.ID === parent.User_familiar_technologies_ID
+      );
+    },
+  },
+
+  Mutation: {
+    async sigin(_, { input }) {
+      const {
+        User_ID,
+        First_name,
+        Last_name,
+        Email_ID,
+        Phone_number,
+        Resume_url,
+        Portfolio_url,
+        User_image_url,
+        Referrer_name,
+        Is_subscribed_to_email,
+        Percentage,
+        Year_of_passing,
+        College_name,
+        College_location,
+        qualification_ID,
+        Stream_ID,
+        College_ID,
+        Applicant_type,
+        Years_of_experience,
+        Current_ctc,
+        Expected_ctc,
+        Is_currently_on_notice_period,
+        Notice_period_end_date,
+        Notice_period_length_in_months,
+        Is_appeared_previously,
+        Role_applied_for,
+      } = input;
+
+      const Query = `
+                INSERT INTO users (User_ID, First_name, Last_name, Email_ID, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
+              `;
+
+      await new Promise((resolve, reject) => {
+        connection.query(
+          Query,
+          [
+            User_ID,
+            First_name,
+            Last_name,
+            Email_ID,
+            Phone_number,
+            Resume_url,
+            Portfolio_url,
+            User_image_url,
+            Referrer_name,
+            Is_subscribed_to_email,
+          ],
+          (error) => {
+            if (error) reject(error);
+            else resolve();
+          }
+        );
+      });
+
+      const eduQuery = `
+                INSERT INTO educational_qualification (User_ID, Percentage, Year_of_passing, College_name, College_location, qualification_ID, Stream_ID, College_ID, dt_created, dt_modified)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
+              `;
+
+      await new Promise((resolve, reject) => {
+        connection.query(
+          eduQuery,
+          [
+            User_ID,
+            Percentage,
+            Year_of_passing,
+            College_name,
+            College_location,
+            qualification_ID,
+            Stream_ID,
+            College_ID,
+          ],
+          (error) => {
+            if (error) reject(error);
+            else resolve();
+          }
+        );
+      });
+
+      const profQuery = `
+                INSERT INTO professional_qualification (User_ID, Applicant_type, Years_of_experience, Current_ctc, Expected_ctc, Is_currently_on_notice_period, Notice_period_end_date, Notice_period_length_in_months, Is_appeared_previously, Role_applied_for,dt_created, dt_modified)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
+              `;
+
+      await new Promise((resolve, reject) => {
+        connection.query(
+          profQuery,
+          [
+            User_ID,
+            Applicant_type,
+            Years_of_experience,
+            Current_ctc,
+            Expected_ctc,
+            Is_currently_on_notice_period,
+            Notice_period_end_date,
+            Notice_period_length_in_months,
+            Is_appeared_previously,
+            Role_applied_for,
+          ],
+          (error) => {
+            if (error) reject(error);
+            else resolve();
+          }
+        );
+      });
     },
   },
 };

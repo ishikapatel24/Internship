@@ -1,9 +1,30 @@
 import { useState } from "react";
 import style from "../css/qualification.module.css";
 import Register from "./Register";
+import { gql, useQuery } from "@apollo/client";
+
+const query = gql`
+  query Query {
+    getStream {
+      Stream_type
+    }
+    getCollege {
+      College_name
+    }
+    getQualification {
+      Qualification_type
+    }
+    getTechnology {
+      Technology_name
+    }
+  }
+`;
 
 export default function Qualification({ formData, setformData }) {
-  
+  const { data, loading } = useQuery(query);
+  if (loading) return <h1>Loading...</h1>;
+  // console.log(data.getStream);
+
   function handleData(e) {
     const { name, value, type, checked } = e.target;
     const { expertTechnology, familiarTechnology } = formData;
@@ -76,58 +97,45 @@ export default function Qualification({ formData, setformData }) {
               <div className={style.gridDiv}>
                 <p>Qualification*</p>
                 <div className={style.eduInfo}>
-                  <select name="qualification" id="" onChange={handleData} value={formData.qualification}>
-                    <option
-                      value="B.Tech"
-                    >
-                      B.Tech
-                    </option>
-                    <option
-                      value="BCA"
-                    >
-                      BCA
-                    </option>
-                    <option
-                      value="MCA"
-                    >
-                      MCA
-                    </option>
+                  <select
+                    name="qualification"
+                    id=""
+                    onChange={handleData}
+                    value={formData.qualification}
+                  >
+                    {data.getQualification.map((Qual, indexs) => (
+                      <option value={Qual.Qualification_type} key={indexs}>{Qual.Qualification_type}</option>
+                    ))}
                   </select>
                 </div>
               </div>
               <div className={style.gridDiv}>
                 <p>Stream*</p>
                 <div className={style.eduInfo}>
-                  <select name="stream" id="" onChange={handleData} value={formData.stream}>
-                    <option
-                      value="science"
-                    >
-                      science
-                    </option>
-                    <option
-                      value="commerce"
-                    >
-                      commerce
-                    </option>
-                    <option value="arts" >
-                      arts
-                    </option>
+                  <select
+                    name="stream"
+                    id=""
+                    onChange={handleData}
+                    value={formData.stream}
+                  >
+                    {data.getStream.map((stream, indexs) => (
+                      <option value={stream.Stream_type} key={indexs}>{stream.Stream_type}</option>
+                    ))}
                   </select>
                 </div>
               </div>
               <div className={style.gridDiv}>
                 <p>College*</p>
                 <div className={style.eduInfo}>
-                  <select name="college" id="" onChange={handleData} value={formData.college}>
-                    <option value="L.D" >
-                      L.D
-                    </option>
-                    <option value="L.J">
-                      L.J
-                    </option>
-                    <option value="L.M">
-                      L.M
-                    </option>
+                  <select
+                    name="college"
+                    id=""
+                    onChange={handleData}
+                    value={formData.college}
+                  >
+                    {data.getCollege.map((college, indexs) => (
+                      <option value={college.College_name} key={indexs}>{college.College_name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -425,6 +433,7 @@ export default function Qualification({ formData, setformData }) {
                       &nbsp;&nbsp;No
                     </div>
                   </div>
+                  {formData.curNoticePeriod === "Yes" ?
                   <div className={style.noticePeriod}>
                     <div className={style.noticePeriodInfo}>
                       <p>If Yes, when will your notice period end?*</p>
@@ -454,7 +463,7 @@ export default function Qualification({ formData, setformData }) {
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> : ""}
                 </div>
               </>
             ) : (

@@ -7,6 +7,8 @@ import Review from "./Review";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { YOUR_SIGNIN_MUTATION } from "../mutation/mutation";
 
 const personalDetailSchema = Yup.object().shape({
   firstName: Yup.string().required("First Name is required"),
@@ -14,7 +16,7 @@ const personalDetailSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   phoneCode: Yup.string().required("Phone Code is required"),
   phoneNumber: Yup.string().required("Phone Number is required"),
-  portfoliourl: Yup.string().url("Invalid URL"),
+  portfoliourl: Yup.string(),
   referralName: Yup.string(),
   jobRoleRes: Yup.array().min(1, "Select at least one job role"),
 });
@@ -66,10 +68,6 @@ export default function Register() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const goJobOpening = () => {
-    navigate(`/jobopeningdetails/${id}`);
-  };
-
   const goLogin = () => {
     navigate(`/walkinlogin/${id}`);
   };
@@ -90,9 +88,9 @@ export default function Register() {
     percentage: "",
     location: "",
     yearOfPassing: "2020",
-    qualification: "B.Tech",
+    qualification: "BE",
     stream: "science",
-    college: "L.D",
+    college: "LD",
     otherCollege: "",
     applicant: "",
     yearOfExp: "",
@@ -108,6 +106,11 @@ export default function Register() {
     familiarOther: "",
     applyRole: "",
   });
+
+  const [signUpUser, { data, loading, error }] =
+    useMutation(YOUR_SIGNIN_MUTATION);
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return console.log(error);
 
   const goQualification = (event) => {
     event.preventDefault();
@@ -130,6 +133,44 @@ export default function Register() {
           alert("Please Fill Properly or Mandatory Details");
         });
     }
+  };
+
+  const goJobOpening = () => {
+    signUpUser({
+      variables: {
+        input: {
+          User_ID: 107,
+          First_name: formData.firstName,
+          Last_name: formData.lastName,
+          Email_ID: formData.email,
+          Phone_number: formData.phoneNumber,
+          Is_subscribed_to_email: formData.jobUpdate === "no" ? false : true,
+          Resume_url: formData.resumeFile,
+          Portfolio_url: formData.portfoliourl,
+          User_image_url: null,
+          Referrer_name: formData.referralName,
+          Percentage: formData.percentage,
+          Year_of_passing: formData.yearOfPassing,
+          College_name: formData.otherCollege,
+          College_location: formData.location,
+          qualification_ID: 1,
+          Stream_ID: 2,
+          College_ID: 1,
+          Applicant_type: formData.applicant === "fresher" ? 1 : 2,
+          Years_of_experience: formData.yearOfExp,
+          Current_ctc: formData.currentCTC,
+          Expected_ctc: formData.expCTC,
+          Is_currently_on_notice_period:
+            formData.curNoticePeriod === "Yes" ? true : false,
+          Notice_period_end_date: formData.endNoticePeriod,
+          Notice_period_length_in_months: formData.lengthOfNoticePeriod,
+          Is_appeared_previously:
+            formData.isAppearedTest === "Yes" ? true : false,
+          Role_applied_for: formData.applyRole,
+        },
+      },
+    });
+    navigate(`/jobopeningdetails/${id}`);
   };
 
   const PageDisplay = () => {

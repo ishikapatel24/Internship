@@ -15,6 +15,7 @@ const typeDefs = `#graphql
         Resume_url: String
         Portfolio_url: String
         User_image_url: String
+        Referrer_name: String
         Is_subscribed_to_email: Boolean
         professionalQualification: [ProfessionalQualification!]!
         educationalQualification: [EducationalQualification!]!
@@ -42,12 +43,12 @@ const typeDefs = `#graphql
         ID:ID!
         User_ID: Int!
         Applicant_type: Int!
-        Years_of_experience: Int
-        Current_ctc: Int
-        Expected_ctc: Int
+        Years_of_experience: String
+        Current_ctc: String
+        Expected_ctc: String
         Is_currently_on_notice_period: Boolean
         Notice_period_end_date: String
-        Notice_period_length_in_months: Int
+        Notice_period_length_in_months: String
         Is_appeared_previously: Boolean!
         Role_applied_for: String
     }
@@ -95,6 +96,7 @@ const typeDefs = `#graphql
         End_date: String!
         Office_location: String!
         Is_internship_opportunity_for_mca: Boolean!
+        Is_expire: Boolean!
         additionalDetails: [JobOpenningAdditionalDetails!]!
         jobOpeningJobRoleMap: [JobOpeningJobRoleMap!]!
         application: [Application!]!
@@ -122,6 +124,7 @@ const typeDefs = `#graphql
         ID: ID!
         Job_opening_ID: Int!
         Job_role_ID: Int!
+        Package: Int!
         jobRole:[JobRole!]!
     }
 
@@ -140,10 +143,48 @@ const typeDefs = `#graphql
     }
     
     type Query {
+        getJobopening : [JobOpening]
         getUserCredentials : [UserCredentials]
-        getUserDetails(ID:Int!) : [UserDetails]
-        getJobOpening(ID:Int!) : [JobOpening]
+        getUserDetails(ID:String!) : [UserDetails]
+        getJobOpening(ID:String!) : [JobOpening]
         getUserLoginDetails(UserName:String!) : [UserDetails]
+        getCollege : [EnumCollegeName]
+        getStream : [EnumStreamName]
+        getQualification : [EnumQualificationType]
+        getTechnology : [EnumTechnologies]
+    }
+    
+    type Mutation{
+        sigin(input:userInput!):UserDetails
+    }
+    
+    input userInput{
+        User_ID: Int!
+        First_name: String!
+        Last_name: String!
+        Email_ID: String!
+        Phone_number: String!
+        Resume_url: String
+        Portfolio_url: String
+        User_image_url: String
+        Is_subscribed_to_email: Boolean
+        Referrer_name: String
+        Percentage: String!
+        Year_of_passing: String!
+        College_name: String
+        College_location: String!
+        qualification_ID: Int!
+        Stream_ID: Int!
+        College_ID: Int!
+        Applicant_type: Int!
+        Years_of_experience: String
+        Current_ctc: String
+        Expected_ctc: String
+        Is_currently_on_notice_period: Boolean
+        Notice_period_end_date: String
+        Notice_period_length_in_months: String
+        Is_appeared_previously: Boolean!
+        Role_applied_for: String
     }`;
 
 module.exports = { typeDefs };

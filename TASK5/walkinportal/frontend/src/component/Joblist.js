@@ -6,77 +6,74 @@ import jobOpening from "../json/jobOpening";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import { gql, useQuery } from "@apollo/client";
+
+const query = gql`
+  query Query {
+    getJobopening {
+      Job_opening_ID
+      Job_title
+      Start_date
+      End_date
+      Office_location
+      Is_internship_opportunity_for_mca
+      Is_expire
+      jobOpeningJobRoleMap {
+        jobRole {
+          Job_role_name
+        }
+      }
+    }
+  }
+`;
 
 export default function Joblist() {
   const ind = 1;
+  const { data, loading } = useQuery(query);
+  if (loading) return <h1>Loading...</h1>;
+  // console.log(data.getJobopening[0]);
   return (
     <>
-      <Navbar userLogo={false}/>
+      <Navbar userLogo={false} />
       <section className="jobOpeningList">
-        {jobOpening.map((item, index) => (
+        {data.getJobopening.map((item, index) => (
           <div className={style.jobOpening} key={index}>
-            {item.isExpireDay ? (
+            {item.Is_expire ? (
               <div className={style.expireDay}>Expires in 5 days</div>
             ) : (
               ""
             )}
-
-            <div className={style.jobOpeningtitle}>{item.jobOpeningTitle}</div>
-
+            <div className={style.jobOpeningtitle}>{item.Job_title}</div>
             <div className={style.dateHeading}>Date & Time :</div>
             <div className={style.dateDetails}>
               <div className={style.dateValue}>
-                {item.date.startDate} to {item.date.endDate}
-              </div>
+                {item.Start_date} to {item.End_date}
+              </div> 
               <img src={location} alt="" />
-              <div className={style.location}>{item.officeLocation}</div>
+              <div className={style.location}>{item.Office_location}</div>
             </div>
-
             <div className={style.jobRolesHeading}>Job Roles :</div>
-
+            
             <div className={style.jobRoles}>
-              {item.jobRoles.isInstructionalDesigner ? (
-                <div>
+              {item.jobOpeningJobRoleMap.map((jobroles, indexs) => (
+                <div key={indexs}>
                   <img src={InstructionalDesigner} alt="" />
                   <div className={style.jobRoleName}>
-                    Instructional Designer
+                    {jobroles.jobRole[0].Job_role_name}
                   </div>
                 </div>
-              ) : (
-                ""
-              )}
-
-              {item.jobRoles.isSoftwareEngineer ? (
-                <div>
-                  <img src={InstructionalDesigner} alt="" />
-                  <div className={style.jobRoleName}>Software Engineer</div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {item.jobRoles.isSoftwareQualityEngineer ? (
-                <div>
-                  <img src={SoftwareQualityEngineer} alt="" />
-                  <div className={style.jobRoleName}>
-                    Software Quality Engineer
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
+              ))}
             </div>
 
-            {item.isInternshipOpportunityforMCA ? (
+            {item.Is_internship_opportunity_for_mca ? (
               <div className={style.internshipOpportunity}>
                 Internship Opportunity for MCA Students
               </div>
             ) : (
               ""
             )}
-
             <Link
-              to={`/walkinlogin/${index}`}
+              to={`/walkinlogin/${index+1}`}
               style={{ textDecoration: "none" }}
             >
               <button className={style.viewDetails}>VIEW MORE DETAILS</button>

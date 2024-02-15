@@ -228,20 +228,26 @@ export default function App({ formData, setformData }) {
                       {formData.curNoticePeriod}
                     </div>
                   </div>
-                  <div className={style.noticePeriod}>
-                    <div className={style.noticePeriodInfo}>
-                      <p>If Yes, when will your notice period end?</p>
-                      <div className={style.profQualificationDetail}>
-                        {formData.endNoticePeriod}
+                  {formData.curNoticePeriod === "Yes" ? (
+                    <div className={style.noticePeriod}>
+                      <div className={style.noticePeriodInfo}>
+                        <p>If Yes, when will your notice period end?</p>
+                        <div className={style.profQualificationDetail}>
+                          {formData.endNoticePeriod}
+                        </div>
+                      </div>
+                      <div className={style.noticePeriodInfo}>
+                        <p>
+                          How long is your notice period? (Mention in months)
+                        </p>
+                        <div className={style.profQualificationDetail}>
+                          {formData.lengthOfNoticePeriod}
+                        </div>
                       </div>
                     </div>
-                    <div className={style.noticePeriodInfo}>
-                      <p>How long is your notice period? (Mention in months)</p>
-                      <div className={style.profQualificationDetail}>
-                        {formData.lengthOfNoticePeriod}
-                      </div>
-                    </div>
-                  </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </>
             ) : (
