@@ -7,6 +7,8 @@ import SoftwareQualityEngineer from "../image/Software Quality Engineer.png";
 import jobOpening from "../json/jobOpening";
 import Navbar from "./Navbar";
 import { gql, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { APPLY_MUTATION } from "../mutation/mutation";
 
 const query = gql`
   query Query($jobOpeningId: String!) {
@@ -27,8 +29,7 @@ const query = gql`
       }
       application {
         jobOpenningTimeSlot {
-          Time_slot_start
-          Time_slot_end
+          Time_slot
         }
       }
     }
@@ -36,7 +37,7 @@ const query = gql`
 `;
 
 export default function Jobopeningdetails() {
-  const { id } = useParams();
+  const { id, username } = useParams();
 
   const navigate = useNavigate();
   const startDate = jobOpening[id].date.startDate;
@@ -90,11 +91,7 @@ export default function Jobopeningdetails() {
         jobRoleRes: jobRoleRes.filter((e) => e !== value),
       });
     }
-    // console.log(jobRoleRes.length);
-  };
-
-  const goHallticket = () => {
-    navigate(`/jobhallticket/${timeSlotOption}/${startDate}`);
+    // console.log(jobRoleRes);
   };
 
   const [updatedResume, setUpdatedResume] = useState(null);
@@ -107,10 +104,35 @@ export default function Jobopeningdetails() {
   const { data, error, loading } = useQuery(query, {
     variables: { jobOpeningId },
   });
-  if (loading) return <h1>Loading...</h1>;
-  if (error) console.log(error);
-  // else console.log(data.getJobOpening[0]);
-
+  
+  // Use the useMutation hook without conditions
+  const [
+    applyUser,
+    { data: applyData, loading: applyLoading, error: applyError },
+  ] = useMutation(APPLY_MUTATION);
+  
+  if (loading || applyLoading) {
+    return <h1>Loading...</h1>;
+  }
+  
+  if (error) {
+    console.log(error);
+  }
+  const goHallticket = () => {
+    // console.log(jobRoleOption.jobRoleRes);
+    applyUser({
+      variables: {
+        input: {
+          Username: username,
+          Job_Role_Prefernce: jobRoleOption.jobRoleRes,
+          Time_Slot: timeSlotOption,
+          Job_Opening_ID: parseInt(jobOpeningId),
+        },
+      },
+    });
+    navigate(`/jobhallticket/${timeSlotOption}/${startDate}`);
+  };
+  
   const item = data.getJobOpening[0];
 
   return (
@@ -247,7 +269,7 @@ export default function Jobopeningdetails() {
               <input
                 type="radio"
                 name="time"
-                value="firstTimeSlot"
+                value="9:00 AM to 11:00 AM"
                 onChange={handleRadioChange}
               />
               9:00 AM to 11:00 AM
@@ -256,7 +278,7 @@ export default function Jobopeningdetails() {
               <input
                 type="radio"
                 name="time"
-                value="secondTimeSlot"
+                value="1:00 PM to 3:00 PM"
                 onChange={handleRadioChange}
               />
               1:00 PM to 3:00 PM
@@ -268,7 +290,7 @@ export default function Jobopeningdetails() {
             {item.jobOpeningJobRoleMap.map((jobroles, indexs) => (
               <div key={indexs} className={style.inp}>
                 <input
-                  value={item}
+                  value={jobroles.jobRole[0].Job_role_name}
                   type="checkbox"
                   onChange={handleCheckboxChange}
                 />

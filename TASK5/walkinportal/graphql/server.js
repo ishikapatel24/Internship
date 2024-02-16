@@ -146,6 +146,22 @@ const resolvers = {
       const Technology = await getTechnology();
       return Technology;
     },
+    async getqualification(_, args) {
+      const quals = await getqualification();
+      return quals.filter((qual) => qual.Qualification_type === args.Name);
+    },
+    async getstream(_, args) {
+      const streamNames = await getstream();
+      return streamNames.filter(
+        (streamName) => streamName.Stream_type === args.Name
+      );
+    },
+    async getcollege(_, args) {
+      const collegeNames = await getcollege();
+      return collegeNames.filter(
+        (collegeName) => collegeName.College_name === args.Name
+      );
+    },
   },
   UserDetails: {
     async professionalQualification(parent) {
@@ -255,6 +271,7 @@ const resolvers = {
         Phone_number,
         Resume_url,
         Portfolio_url,
+        Job_role,
         User_image_url,
         Referrer_name,
         Is_subscribed_to_email,
@@ -262,9 +279,6 @@ const resolvers = {
         Year_of_passing,
         College_name,
         College_location,
-        qualification_ID,
-        Stream_ID,
-        College_ID,
         Applicant_type,
         Years_of_experience,
         Current_ctc,
@@ -274,6 +288,13 @@ const resolvers = {
         Notice_period_length_in_months,
         Is_appeared_previously,
         Role_applied_for,
+        College_names,
+        Stream_types,
+        Qualification_types,
+        Expert_tech,
+        Familiar_tech,
+        Other_expert_tech,
+        Other_familiar_tech,
       } = input;
 
       const Query = `
@@ -303,6 +324,44 @@ const resolvers = {
         );
       });
 
+      const getCollegeQuery = `
+            SELECT ID FROM enum_college_name WHERE College_name = ?;
+          `;
+      const [Collegeresult] = await new Promise((resolve, reject) => {
+        connection.query(getCollegeQuery, [College_names], (error, results) => {
+          if (error) reject(error);
+          else resolve(results);
+        });
+      });
+
+      const getStreamQuery = `
+            SELECT ID FROM enum_stream_type WHERE Stream_type = ?;
+          `;
+      const [streamresult] = await new Promise((resolve, reject) => {
+        connection.query(getStreamQuery, [Stream_types], (error, results) => {
+          if (error) reject(error);
+          else resolve(results);
+        });
+      });
+
+      const getQualificationQuery = `
+            SELECT ID FROM enum_qualification_type WHERE Qualification_type = ?;
+          `;
+      const [Qualresult] = await new Promise((resolve, reject) => {
+        connection.query(
+          getQualificationQuery,
+          [Qualification_types],
+          (error, results) => {
+            if (error) reject(error);
+            else resolve(results);
+          }
+        );
+      });
+
+      const College_Id = Collegeresult.ID;
+      const Stram_Id = streamresult.ID;
+      const Qual_Id = Qualresult.ID;
+
       const eduQuery = `
                 INSERT INTO educational_qualification (User_ID, Percentage, Year_of_passing, College_name, College_location, qualification_ID, Stream_ID, College_ID, dt_created, dt_modified)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
@@ -317,9 +376,9 @@ const resolvers = {
             Year_of_passing,
             College_name,
             College_location,
-            qualification_ID,
-            Stream_ID,
-            College_ID,
+            Qual_Id,
+            Stram_Id,
+            College_Id,
           ],
           (error) => {
             if (error) reject(error);
@@ -354,6 +413,196 @@ const resolvers = {
           }
         );
       });
+
+      const familiarTechQuery = `
+          SELECT ID FROM enum_technologies WHERE Technology_name IN (?);
+        `;
+
+      var familiarTech;
+      const [familiarTechResults] = await new Promise((resolve, reject) => {
+        connection.query(
+          familiarTechQuery,
+          [Familiar_tech],
+          (error, results) => {
+            if (error) reject(error);
+            else {
+              familiarTech = results;
+              resolve(results);
+            }
+          }
+        );
+      });
+
+      for (const tech_ID of familiarTech) {
+        const insertQuery = `
+          INSERT INTO user_familiar_technology (User_ID,User_familiar_technologies_ID,User_familiar_technologies_name,Dt_created,Dt_modified) VALUES (? ,? , ?,NOW() ,NOW());
+        `;
+
+        await new Promise((resolve, reject) => {
+          connection.query(
+            insertQuery,
+            [User_ID, tech_ID.ID, Other_familiar_tech],
+            (error) => {
+              if (error) reject(error);
+              else resolve();
+            }
+          );
+        });
+      }
+
+      const expertTechQuery = `
+          SELECT ID FROM enum_technologies WHERE Technology_name IN (?);
+        `;
+
+      var expertTech;
+      const [expertTechResults] = await new Promise((resolve, reject) => {
+        connection.query(expertTechQuery, [Expert_tech], (error, results) => {
+          if (error) reject(error);
+          else {
+            expertTech = results;
+            resolve(results);
+          }
+        });
+      });
+
+      for (const tech_ID of expertTech) {
+        const insertQuery = `
+          INSERT INTO user_expert_technology (User_ID,User_expert_technologies_ID,User_expert_technologies_name,Dt_created,Dt_modified) VALUES (? ,? , ?,NOW() ,NOW());
+        `;
+
+        await new Promise((resolve, reject) => {
+          connection.query(
+            insertQuery,
+            [User_ID, tech_ID.ID, Other_expert_tech],
+            (error) => {
+              if (error) reject(error);
+              else resolve();
+            }
+          );
+        });
+      }
+
+      const jobRoleQuery = `
+          SELECT ID FROM job_role WHERE Job_role_name IN (?);
+        `;
+
+      var jobRole;
+      const [jobRoleResult] = await new Promise((resolve, reject) => {
+        connection.query(jobRoleQuery, [Job_role], (error, results) => {
+          if (error) reject(error);
+          else {
+            jobRole = results;
+            resolve(results);
+          }
+        });
+      });
+
+      for (const role of jobRole) {
+        const insertQuery = `
+          INSERT INTO user_preferred_job_role_map (User_ID,Job_role_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
+        `;
+
+        await new Promise((resolve, reject) => {
+          connection.query(insertQuery, [User_ID, role.ID], (error) => {
+            if (error) reject(error);
+            else resolve();
+          });
+        });
+      }
+    },
+
+    async applyJob(_, { input }) {
+      const {
+        Username,
+        Time_Slot,
+        Job_Opening_ID,
+        Job_Role_Prefernce,
+        Resume,
+      } = input;
+      const getUserIDQuery = `
+            SELECT User_ID FROM users WHERE Email_ID = ?;
+          `;
+      const [IDresult] = await new Promise((resolve, reject) => {
+        connection.query(getUserIDQuery, [Username], (error, results) => {
+          if (error) reject(error);
+          else resolve(results);
+        });
+      });
+      // console.log(IDresult.User_ID);
+
+      const jobRoleQuery = `
+          SELECT ID FROM job_role WHERE Job_role_name IN (?);
+        `;
+
+      var jobRolePref;
+      const [jobRoleResult] = await new Promise((resolve, reject) => {
+        connection.query(jobRoleQuery, [Job_Role_Prefernce], (error, results) => {
+          if (error) reject(error);
+          else {
+            jobRolePref = results;
+            resolve(results);
+          }
+        });
+      });
+
+      const timeSlotQuery = `
+          SELECT ID FROM job_openning_time_slot WHERE Time_slot = ?;
+        `;
+      
+      const [slotResult] = await new Promise((resolve, reject) => {
+        connection.query(timeSlotQuery, [Time_Slot], (error, results) => {
+          if (error) reject(error);
+          else {
+            resolve(results);
+          }
+        });
+      });
+
+      const applicationQuery = `
+                INSERT INTO application (Job_opening_ID, User_ID, Time_slot_ID, Resume_url, dt_created, dt_modified)
+                VALUES (?, ?, ?, ?,NOW(), NOW());
+              `;
+
+      await new Promise((resolve, reject) => {
+        connection.query(
+          applicationQuery,
+          [
+            Job_Opening_ID,
+            IDresult.User_ID,
+            slotResult.ID,
+            Resume
+          ],
+          (error) => {
+            if (error) reject(error);
+            else resolve();
+          }
+        );
+      });
+
+      const apllicationIDQuery = `
+          SELECT ID FROM application WHERE Job_opening_ID = ? && User_ID = ?;
+        `;
+      
+      const [applicationResult] = await new Promise((resolve, reject) => {
+        connection.query(apllicationIDQuery, [Job_Opening_ID,IDresult.User_ID], (error, results) => {
+          if (error) reject(error);
+          else {
+            resolve(results);
+          }
+        });
+      });
+      for (const role of jobRolePref) {
+        const insertQuery = `
+          INSERT INTO application_job_role_preference (Application_ID,Application_job_role_preference_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
+        `;
+
+        await new Promise((resolve, reject) => {
+          connection.query(insertQuery, [applicationResult.ID ,role.ID], (error) => {
+            if (error) reject(error);
+            else resolve();
+          });
+        });
+      }
     },
   },
 };

@@ -130,8 +130,7 @@ const typeDefs = `#graphql
 
     type JobOpenningTimeSlot{
         ID: ID!
-        Time_slot_start: String!
-        Time_slot_end: String!
+        Time_slot: String!
     }
 
     type Application{
@@ -152,12 +151,24 @@ const typeDefs = `#graphql
         getStream : [EnumStreamName]
         getQualification : [EnumQualificationType]
         getTechnology : [EnumTechnologies]
+        getcollege(Name:String!) : [EnumCollegeName]
+        getstream(Name:String!) : [EnumStreamName]
+        getqualification(Name:String!) : [EnumQualificationType]
     }
     
     type Mutation{
         sigin(input:userInput!):UserDetails
+        applyJob(input:applyInput):UserDetails
     }
     
+    input applyInput{
+        Username: String!
+        Time_Slot: String!
+        Job_Opening_ID: Int!
+        Job_Role_Prefernce: [String!]
+        Resume: String
+    }
+
     input userInput{
         User_ID: Int!
         First_name: String!
@@ -166,6 +177,7 @@ const typeDefs = `#graphql
         Phone_number: String!
         Resume_url: String
         Portfolio_url: String
+        Job_role: [String!]
         User_image_url: String
         Is_subscribed_to_email: Boolean
         Referrer_name: String
@@ -173,9 +185,6 @@ const typeDefs = `#graphql
         Year_of_passing: String!
         College_name: String
         College_location: String!
-        qualification_ID: Int!
-        Stream_ID: Int!
-        College_ID: Int!
         Applicant_type: Int!
         Years_of_experience: String
         Current_ctc: String
@@ -185,6 +194,13 @@ const typeDefs = `#graphql
         Notice_period_length_in_months: String
         Is_appeared_previously: Boolean!
         Role_applied_for: String
+        College_names: String!
+        Stream_types: String!
+        Qualification_types: String!
+        Expert_tech: [String!]
+        Other_expert_tech: String
+        Familiar_tech: [String!]
+        Other_familiar_tech: String
     }`;
 
 module.exports = { typeDefs };

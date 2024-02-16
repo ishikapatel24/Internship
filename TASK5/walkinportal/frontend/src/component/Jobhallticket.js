@@ -33,11 +33,7 @@ export default function Jobhallticket() {
                 <p>{tm.date}</p>
               </div>
               <div className={style.time}>
-                {tm.value === "firstTimeSlot" ? (
-                  <p>9:00 AM to 11:00 AM</p>
-                ) : (
-                  <p>1:00 PM to 3:00 PM</p>
-                )}
+                <p>{tm.value}</p>
               </div>
             </div>
             <hr />

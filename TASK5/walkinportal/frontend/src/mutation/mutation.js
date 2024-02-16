@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const YOUR_SIGNIN_MUTATION=gql`
+const SIGNIN_MUTATION=gql`
 mutation Mutation($input: userInput!) {
   sigin(input: $input) {
     Last_name
@@ -10,3 +10,12 @@ mutation Mutation($input: userInput!) {
     Resume_url
   }
 }`
+
+const APPLY_MUTATION=gql`
+mutation Mutation($input: applyInput) {
+  applyJob(input: $input) {
+    First_name
+  }
+}`
+
+export { SIGNIN_MUTATION , APPLY_MUTATION}

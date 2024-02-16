@@ -6,6 +6,7 @@ import Jobhallticket from "./component/Jobhallticket";
 import Joblist from "./component/Joblist";
 import app from "./css/app.scss";
 import Register from "./component/Register";
+import Error from "./Error/Error";
 
 function App() {
   // const jobLists = jobOpening.map((item,ind) => {
@@ -29,13 +30,18 @@ function App() {
           />
           <Route
             exact
-            path="/jobopeningdetails/:id"
+            path="/jobopeningdetails/:id/:username"
             element=<Jobopeningdetails />
           />
           <Route
             exact
             path="/register/:id"
             element=<Register />
+          />
+          <Route
+            exact
+            path="/*"
+            element=<Error/>
           />
           
         </Routes>

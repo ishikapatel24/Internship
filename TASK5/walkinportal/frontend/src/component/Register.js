@@ -8,7 +8,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
-import { YOUR_SIGNIN_MUTATION } from "../mutation/mutation";
+import { SIGNIN_MUTATION } from "../mutation/mutation";
 
 const personalDetailSchema = Yup.object().shape({
   firstName: Yup.string().required("First Name is required"),
@@ -108,7 +108,7 @@ export default function Register() {
   });
 
   const [signUpUser, { data, loading, error }] =
-    useMutation(YOUR_SIGNIN_MUTATION);
+    useMutation(SIGNIN_MUTATION);
   if (loading) return <h1>Loading...</h1>;
   if (error) return console.log(error);
 
@@ -148,14 +148,15 @@ export default function Register() {
           Resume_url: formData.resumeFile,
           Portfolio_url: formData.portfoliourl,
           User_image_url: null,
+          Job_role: formData.jobRoleRes,
           Referrer_name: formData.referralName,
           Percentage: formData.percentage,
           Year_of_passing: formData.yearOfPassing,
           College_name: formData.otherCollege,
           College_location: formData.location,
-          qualification_ID: 1,
-          Stream_ID: 2,
-          College_ID: 1,
+          Qualification_types: formData.qualification,
+          Stream_types: formData.stream,
+          College_names: formData.college,
           Applicant_type: formData.applicant === "fresher" ? 1 : 2,
           Years_of_experience: formData.yearOfExp,
           Current_ctc: formData.currentCTC,
@@ -167,6 +168,10 @@ export default function Register() {
           Is_appeared_previously:
             formData.isAppearedTest === "Yes" ? true : false,
           Role_applied_for: formData.applyRole,
+          Expert_tech: formData.expertTechnology,
+          Familiar_tech: formData.familiarTechnology,
+          Other_expert_tech: formData.expertOther,
+          Other_familiar_tech: formData.familiarOther
         },
       },
     });
