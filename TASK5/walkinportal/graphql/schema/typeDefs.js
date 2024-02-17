@@ -155,8 +155,23 @@ const typeDefs = `#graphql
         getstream(Name:String!) : [EnumStreamName]
         getqualification(Name:String!) : [EnumQualificationType]
     }
+
+    type Message{
+        Message: String
+    }
+
+    type AuthPayload {
+        token: String!
+        user:Users
+    }
+
+    type Users{
+        User_ID:Int
+        email:String
+    }
     
     type Mutation{
+        login(email: String!, password: String!): AuthPayload
         sigin(input:userInput!):UserDetails
         applyJob(input:applyInput):UserDetails
     }

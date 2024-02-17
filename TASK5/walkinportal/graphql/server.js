@@ -4,8 +4,49 @@ const { typeDefs } = require("./schema/typeDefs.js");
 const { connection } = require("./database/database.js");
 const { dateScalar } = require("./customscalar/graphqlscalar.js");
 const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
 
 const queryAsync = promisify(connection.query).bind(connection);
+const SECRET = "my-secret-key";
+
+const verifyToken = (token) => {
+  try {
+    if (!token) {
+      return null;
+    }
+    return jwt.verify(token, SECRET);
+  } catch (error) {
+    return null;
+  }
+};
+
+const authenticateUser = async (email, password) => {
+  try {
+    const queryparams = [email];
+    const query = "SELECT * FROM users WHERE Email_ID = ?";
+    const result = await queryAsync(query, queryparams);
+    const passquery = "SELECT * FROM user_login WHERE User_ID = ?";
+    const passresult = await queryAsync(passquery, [result[0].User_ID]);
+    
+    if (result[0] != null && password == passresult[0].User_password) {
+      return {
+        User_ID: result[0].User_ID,
+        email,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    throw new Error("Internal Server Error");
+  }
+};
+
+const generateToken = (user) => {
+  const { email, User_ID } = user;
+  const token = jwt.sign({ email, User_ID }, SECRET, { expiresIn: "1h" });
+  return token;
+};
 
 async function getUserCredentials() {
   const query = "SELECT * FROM user_login";
@@ -114,11 +155,20 @@ const resolvers = {
       const users = await getUserDetails();
       return users.filter((user) => String(user.User_ID) === args.ID);
     },
-    async getJobopening() {
+    async getJobopening(_,__,{user}) {
+      // console.log(user);
+      // if(!user)
+      // {
+      //   throw new Error("User not authenticate");
+      // }
       const jobLists = await getJobOpening();
       return jobLists;
     },
-    async getJobOpening(_, args) {
+    async getJobOpening(_, args,{user}) {
+      if(!user)
+      {
+        throw new Error("User not authenticate");
+      }
       const jobLists = await getJobOpening();
       return jobLists.filter(
         (jobList) => String(jobList.Job_opening_ID) === args.ID
@@ -536,19 +586,23 @@ const resolvers = {
 
       var jobRolePref;
       const [jobRoleResult] = await new Promise((resolve, reject) => {
-        connection.query(jobRoleQuery, [Job_Role_Prefernce], (error, results) => {
-          if (error) reject(error);
-          else {
-            jobRolePref = results;
-            resolve(results);
+        connection.query(
+          jobRoleQuery,
+          [Job_Role_Prefernce],
+          (error, results) => {
+            if (error) reject(error);
+            else {
+              jobRolePref = results;
+              resolve(results);
+            }
           }
-        });
+        );
       });
 
       const timeSlotQuery = `
           SELECT ID FROM job_openning_time_slot WHERE Time_slot = ?;
         `;
-      
+
       const [slotResult] = await new Promise((resolve, reject) => {
         connection.query(timeSlotQuery, [Time_Slot], (error, results) => {
           if (error) reject(error);
@@ -566,12 +620,7 @@ const resolvers = {
       await new Promise((resolve, reject) => {
         connection.query(
           applicationQuery,
-          [
-            Job_Opening_ID,
-            IDresult.User_ID,
-            slotResult.ID,
-            Resume
-          ],
+          [Job_Opening_ID, IDresult.User_ID, slotResult.ID, Resume],
           (error) => {
             if (error) reject(error);
             else resolve();
@@ -582,14 +631,18 @@ const resolvers = {
       const apllicationIDQuery = `
           SELECT ID FROM application WHERE Job_opening_ID = ? && User_ID = ?;
         `;
-      
+
       const [applicationResult] = await new Promise((resolve, reject) => {
-        connection.query(apllicationIDQuery, [Job_Opening_ID,IDresult.User_ID], (error, results) => {
-          if (error) reject(error);
-          else {
-            resolve(results);
+        connection.query(
+          apllicationIDQuery,
+          [Job_Opening_ID, IDresult.User_ID],
+          (error, results) => {
+            if (error) reject(error);
+            else {
+              resolve(results);
+            }
           }
-        });
+        );
       });
       for (const role of jobRolePref) {
         const insertQuery = `
@@ -597,12 +650,25 @@ const resolvers = {
         `;
 
         await new Promise((resolve, reject) => {
-          connection.query(insertQuery, [applicationResult.ID ,role.ID], (error) => {
-            if (error) reject(error);
-            else resolve();
-          });
+          connection.query(
+            insertQuery,
+            [applicationResult.ID, role.ID],
+            (error) => {
+              if (error) reject(error);
+              else resolve();
+            }
+          );
         });
       }
+    },
+    login: async (_, { email, password }) => {
+      const user = await authenticateUser(email, password);
+      if (!user) {
+        throw new Error("Invalid credentials");
+      }
+
+      const token = generateToken(user);
+      return { token, user };
     },
   },
 };
@@ -616,6 +682,16 @@ const startserver = async () => {
   try {
     const { url } = await startStandaloneServer(server, {
       listen: { port: 4000 },
+      context: ({ req }) => {
+        const token = req.headers.authorization || "";
+        try {
+          const user = verifyToken(token);
+          return { user };
+        } catch (error) {
+          console.error("Token verification failed:", error);
+          return {};
+        }
+      },
     });
   } catch (error) {
     console.error("Error starting the server:", error);
