@@ -139,7 +139,6 @@ export default function Register() {
     signUpUser({
       variables: {
         input: {
-          User_ID: 107,
           First_name: formData.firstName,
           Last_name: formData.lastName,
           Email_ID: formData.email,

@@ -27,7 +27,7 @@ const authenticateUser = async (email, password) => {
     const result = await queryAsync(query, queryparams);
     const passquery = "SELECT * FROM user_login WHERE User_ID = ?";
     const passresult = await queryAsync(passquery, [result[0].User_ID]);
-    
+
     if (result[0] != null && password == passresult[0].User_password) {
       return {
         User_ID: result[0].User_ID,
@@ -155,7 +155,7 @@ const resolvers = {
       const users = await getUserDetails();
       return users.filter((user) => String(user.User_ID) === args.ID);
     },
-    async getJobopening(_,__,{user}) {
+    async getJobopening(_, __, { user }) {
       // console.log(user);
       // if(!user)
       // {
@@ -164,9 +164,8 @@ const resolvers = {
       const jobLists = await getJobOpening();
       return jobLists;
     },
-    async getJobOpening(_, args,{user}) {
-      if(!user)
-      {
+    async getJobOpening(_, args, { user }) {
+      if (!user) {
         throw new Error("User not authenticate");
       }
       const jobLists = await getJobOpening();
@@ -314,7 +313,6 @@ const resolvers = {
   Mutation: {
     async sigin(_, { input }) {
       const {
-        User_ID,
         First_name,
         Last_name,
         Email_ID,
@@ -348,15 +346,14 @@ const resolvers = {
       } = input;
 
       const Query = `
-                INSERT INTO users (User_ID, First_name, Last_name, Email_ID, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
+                INSERT INTO users (First_name, Last_name, Email_ID, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
               `;
 
       await new Promise((resolve, reject) => {
         connection.query(
           Query,
           [
-            User_ID,
             First_name,
             Last_name,
             Email_ID,
@@ -372,6 +369,21 @@ const resolvers = {
             else resolve();
           }
         );
+      });
+
+      const userQuery = `
+            SELECT User_ID FROM users WHERE Email_ID = ?;
+          `;
+
+      var User_ID;
+      const [userIDresult] = await new Promise((resolve, reject) => {
+        connection.query(userQuery, [Email_ID], (error, results) => {
+          if (error) reject(error);
+          else {
+            User_ID = results[0].User_ID;
+            resolve(results);
+          }
+        });
       });
 
       const getCollegeQuery = `
@@ -500,41 +512,42 @@ const resolvers = {
         });
       }
 
-      const expertTechQuery = `
+      if (Expert_tech.lenght > 0) {
+        const expertTechQuery = `
           SELECT ID FROM enum_technologies WHERE Technology_name IN (?);
         `;
 
-      var expertTech;
-      const [expertTechResults] = await new Promise((resolve, reject) => {
-        connection.query(expertTechQuery, [Expert_tech], (error, results) => {
-          if (error) reject(error);
-          else {
-            expertTech = results;
-            resolve(results);
-          }
-        });
-      });
-
-      for (const tech_ID of expertTech) {
-        const insertQuery = `
-          INSERT INTO user_expert_technology (User_ID,User_expert_technologies_ID,User_expert_technologies_name,Dt_created,Dt_modified) VALUES (? ,? , ?,NOW() ,NOW());
-        `;
-
-        await new Promise((resolve, reject) => {
-          connection.query(
-            insertQuery,
-            [User_ID, tech_ID.ID, Other_expert_tech],
-            (error) => {
-              if (error) reject(error);
-              else resolve();
+        var expertTech;
+        const [expertTechResults] = await new Promise((resolve, reject) => {
+          connection.query(expertTechQuery, [Expert_tech], (error, results) => {
+            if (error) reject(error);
+            else {
+              expertTech = results;
+              resolve(results);
             }
-          );
+          });
         });
-      }
 
+        for (const tech_ID of expertTech) {
+          const insertQuery = `
+            INSERT INTO user_expert_technology (User_ID,User_expert_technologies_ID,User_expert_technologies_name,Dt_created,Dt_modified) VALUES (? ,? , ?,NOW() ,NOW());
+          `;
+
+          await new Promise((resolve, reject) => {
+            connection.query(
+              insertQuery,
+              [User_ID, tech_ID.ID, Other_expert_tech],
+              (error) => {
+                if (error) reject(error);
+                else resolve();
+              }
+            );
+          });
+        }
+      }
       const jobRoleQuery = `
-          SELECT ID FROM job_role WHERE Job_role_name IN (?);
-        `;
+            SELECT ID FROM job_role WHERE Job_role_name IN (?);
+          `;
 
       var jobRole;
       const [jobRoleResult] = await new Promise((resolve, reject) => {
@@ -549,8 +562,8 @@ const resolvers = {
 
       for (const role of jobRole) {
         const insertQuery = `
-          INSERT INTO user_preferred_job_role_map (User_ID,Job_role_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
-        `;
+            INSERT INTO user_preferred_job_role_map (User_ID,Job_role_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
+          `;
 
         await new Promise((resolve, reject) => {
           connection.query(insertQuery, [User_ID, role.ID], (error) => {
@@ -570,8 +583,8 @@ const resolvers = {
         Resume,
       } = input;
       const getUserIDQuery = `
-            SELECT User_ID FROM users WHERE Email_ID = ?;
-          `;
+              SELECT User_ID FROM users WHERE Email_ID = ?;
+            `;
       const [IDresult] = await new Promise((resolve, reject) => {
         connection.query(getUserIDQuery, [Username], (error, results) => {
           if (error) reject(error);
@@ -581,8 +594,8 @@ const resolvers = {
       // console.log(IDresult.User_ID);
 
       const jobRoleQuery = `
-          SELECT ID FROM job_role WHERE Job_role_name IN (?);
-        `;
+            SELECT ID FROM job_role WHERE Job_role_name IN (?);
+          `;
 
       var jobRolePref;
       const [jobRoleResult] = await new Promise((resolve, reject) => {
@@ -600,8 +613,8 @@ const resolvers = {
       });
 
       const timeSlotQuery = `
-          SELECT ID FROM job_openning_time_slot WHERE Time_slot = ?;
-        `;
+            SELECT ID FROM job_openning_time_slot WHERE Time_slot = ?;
+          `;
 
       const [slotResult] = await new Promise((resolve, reject) => {
         connection.query(timeSlotQuery, [Time_Slot], (error, results) => {
@@ -613,9 +626,9 @@ const resolvers = {
       });
 
       const applicationQuery = `
-                INSERT INTO application (Job_opening_ID, User_ID, Time_slot_ID, Resume_url, dt_created, dt_modified)
-                VALUES (?, ?, ?, ?,NOW(), NOW());
-              `;
+                  INSERT INTO application (Job_opening_ID, User_ID, Time_slot_ID, Resume_url, dt_created, dt_modified)
+                  VALUES (?, ?, ?, ?,NOW(), NOW());
+                `;
 
       await new Promise((resolve, reject) => {
         connection.query(
@@ -629,8 +642,8 @@ const resolvers = {
       });
 
       const apllicationIDQuery = `
-          SELECT ID FROM application WHERE Job_opening_ID = ? && User_ID = ?;
-        `;
+            SELECT ID FROM application WHERE Job_opening_ID = ? && User_ID = ?;
+          `;
 
       const [applicationResult] = await new Promise((resolve, reject) => {
         connection.query(
@@ -646,8 +659,8 @@ const resolvers = {
       });
       for (const role of jobRolePref) {
         const insertQuery = `
-          INSERT INTO application_job_role_preference (Application_ID,Application_job_role_preference_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
-        `;
+            INSERT INTO application_job_role_preference (Application_ID,Application_job_role_preference_ID,Dt_created,Dt_modified) VALUES (? ,? ,NOW() ,NOW());
+          `;
 
         await new Promise((resolve, reject) => {
           connection.query(

@@ -6,8 +6,6 @@ const typeDefs = `#graphql
     }
 
     type UserDetails {
-        ID:ID!
-        User_ID: Int!
         First_name: String!
         Last_name: String!
         Email_ID: String!
@@ -185,7 +183,6 @@ const typeDefs = `#graphql
     }
 
     input userInput{
-        User_ID: Int!
         First_name: String!
         Last_name: String!
         Email_ID: String!
