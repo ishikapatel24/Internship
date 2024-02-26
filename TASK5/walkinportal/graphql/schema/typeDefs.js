@@ -1,14 +1,10 @@
 const typeDefs = `#graphql
-    type UserCredentials {
-    ID: Int!
-    User_ID: Int!
-    User_password: String!
-    }
 
     type UserDetails {
         First_name: String!
         Last_name: String!
         Email_ID: String!
+        User_password: String!
         Phone_number: String!
         Resume_url: String
         Portfolio_url: String
@@ -17,7 +13,6 @@ const typeDefs = `#graphql
         Is_subscribed_to_email: Boolean
         professionalQualification: [ProfessionalQualification!]!
         educationalQualification: [EducationalQualification!]!
-        userCredentials: UserCredentials
         expertTechnology: [ExpertTechnology!]!
         familiarTechnology: [FamiliarTechnology!]!
     }
@@ -141,7 +136,6 @@ const typeDefs = `#graphql
     
     type Query {
         getJobopening : [JobOpening]
-        getUserCredentials : [UserCredentials]
         getUserDetails(ID:String!) : [UserDetails]
         getJobOpening(ID:String!) : [JobOpening]
         getUserLoginDetails(UserName:String!) : [UserDetails]
@@ -160,6 +154,7 @@ const typeDefs = `#graphql
 
     type AuthPayload {
         token: String!
+        expirationTime: String!
         user:Users
     }
 
@@ -186,6 +181,7 @@ const typeDefs = `#graphql
         First_name: String!
         Last_name: String!
         Email_ID: String!
+        User_password: String!
         Phone_number: String!
         Resume_url: String
         Portfolio_url: String

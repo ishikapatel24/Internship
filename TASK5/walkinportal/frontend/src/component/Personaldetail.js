@@ -1,6 +1,6 @@
 import style from "../css/personaldetail.module.css";
 // import Register from "./Register";
-import { useState } from "react";
+import preview from "../image/preview.png";
 
 export default function Personaldetail({ formData, setformData }) {
   function handleData(e) {
@@ -20,6 +20,15 @@ export default function Personaldetail({ formData, setformData }) {
               : jobRoleRes.filter((event) => event !== value)
             : value,
       });
+    }
+  }
+
+  function hide() {
+    var x = document.getElementById("passwordInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
     }
   }
 
@@ -55,6 +64,17 @@ export default function Personaldetail({ formData, setformData }) {
                   value={formData.email}
                   onChange={handleData}
                 />
+              </div>
+              <div className={style.inp}>
+                <p>Password*</p>
+                <input
+                  type="password"
+                  name="password"
+                  id="passwordInput"
+                  value={formData.password}
+                  onChange={handleData}
+                />
+                <img src={preview} onClick={hide} />
               </div>
               <div className={style.PhoneNumber}>
                 <p>Phone Number*</p>
@@ -99,7 +119,7 @@ export default function Personaldetail({ formData, setformData }) {
                 />
               </div>
               <div className={style.pref}>
-                <p>Select Your Preference :</p>
+                <p>Select Your Preference* :</p>
                 <div className={style.checkInp}>
                   <input
                     type="checkbox"

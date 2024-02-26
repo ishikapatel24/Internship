@@ -16,10 +16,9 @@ export default function Walkinlogin() {
 
   const [loginUser] = useMutation(LOGIN_USER, {
     onCompleted: (result) => {
-      const expirationTime = new Date().getTime() + 3600 * 1000;
       localStorage.setItem("authToken", result.login.token);
       localStorage.setItem("username", result.login.user.email);
-      localStorage.setItem("tokenExpiration",expirationTime.toString());
+      localStorage.setItem("tokenExpiration", result.login.expirationTime);
       navigate(`/jobopeningdetails/${id}/${loginData.username}`);
     },
     onError: (error) => {

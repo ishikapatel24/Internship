@@ -25,10 +25,8 @@ const authenticateUser = async (email, password) => {
     const queryparams = [email];
     const query = "SELECT * FROM users WHERE Email_ID = ?";
     const result = await queryAsync(query, queryparams);
-    const passquery = "SELECT * FROM user_login WHERE User_ID = ?";
-    const passresult = await queryAsync(passquery, [result[0].User_ID]);
 
-    if (result[0] != null && passresult[0]!=null && password == passresult[0].User_password) {
+    if (result[0] != null && password == result[0].User_password) {
       return {
         User_ID: result[0].User_ID,
         email,
@@ -42,16 +40,16 @@ const authenticateUser = async (email, password) => {
   }
 };
 
-const generateToken = (user , isRemember) => {
+const generateToken = (user, isRemember) => {
   const { email, User_ID } = user;
-  const token = jwt.sign({ email, User_ID }, SECRET, { expiresIn: isRemember ? "30d" : "1h"});
-  return token;
-};
+  const token = jwt.sign({ email, User_ID }, SECRET, {
+    expiresIn: isRemember ? "30d" : "1h",
+  });
+  const expirationTime =
+    Date.now() + (isRemember ? 30 * 24 * 60 * 60 * 1000 : 1 * 60 * 60 * 1000);
 
-async function getUserCredentials() {
-  const query = "SELECT * FROM user_login";
-  return await queryAsync(query);
-}
+  return { token, expirationTime };
+};
 
 // const getUserCredentials = async () => {
 //   return new Promise((resolve, reject) => {
@@ -171,7 +169,7 @@ const resolvers = {
       const jobLists = await getJobOpening();
       return jobLists.filter(
         (jobList) => String(jobList.Job_opening_ID) === args.ID
-        );
+      );
     },
     async getUserLoginDetails(_, args) {
       const userLoginDetails = await getUserLoginDetails();
@@ -223,10 +221,10 @@ const resolvers = {
       const eduQuals = await getEducationalQualification();
       return eduQuals.filter((eduQual) => eduQual.User_ID === parent.User_ID);
     },
-    async userCredentials(parent) {
-      const users = await getUserCredentials();
-      return users.find((user) => user.User_ID === parent.User_ID);
-    },
+    // async userCredentials(parent) {
+    //   const users = await getUserCredentials();
+    //   return users.find((user) => user.User_ID === parent.User_ID);
+    // },
     async expertTechnology(parent) {
       const techs = await getExpertTechnology();
       return techs.filter((tech) => tech.User_ID === parent.User_ID);
@@ -317,6 +315,7 @@ const resolvers = {
         First_name,
         Last_name,
         Email_ID,
+        User_password,
         Phone_number,
         Resume_url,
         Portfolio_url,
@@ -347,8 +346,8 @@ const resolvers = {
       } = input;
 
       const Query = `
-                INSERT INTO users (First_name, Last_name, Email_ID, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
+                INSERT INTO users (First_name, Last_name, Email_ID, User_password, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
               `;
 
       await new Promise((resolve, reject) => {
@@ -358,6 +357,7 @@ const resolvers = {
             First_name,
             Last_name,
             Email_ID,
+            User_password,
             Phone_number,
             Resume_url,
             Portfolio_url,
@@ -477,24 +477,26 @@ const resolvers = {
         );
       });
 
-      const familiarTechQuery = `
+      if (Familiar_tech.lenght > 0) {
+        const familiarTechQuery = `
           SELECT ID FROM enum_technologies WHERE Technology_name IN (?);
         `;
 
-      var familiarTech;
-      const [familiarTechResults] = await new Promise((resolve, reject) => {
-        connection.query(
-          familiarTechQuery,
-          [Familiar_tech],
-          (error, results) => {
-            if (error) reject(error);
-            else {
-              familiarTech = results;
-              resolve(results);
+        var familiarTech;
+        const [familiarTechResults] = await new Promise((resolve, reject) => {
+          connection.query(
+            familiarTechQuery,
+            [Familiar_tech],
+            (error, results) => {
+              if (error) reject(error);
+              else {
+                familiarTech = results;
+                resolve(results);
+              }
             }
-          }
-        );
-      });
+          );
+        });
+      }
 
       for (const tech_ID of familiarTech) {
         const insertQuery = `
@@ -675,14 +677,14 @@ const resolvers = {
         });
       }
     },
-    login: async (_, { email, password , isRemember}) => {
+    login: async (_, { email, password, isRemember }) => {
       const user = await authenticateUser(email, password);
       if (!user) {
         throw new Error("Invalid credentials");
       }
 
-      const token = generateToken(user, isRemember);
-      return { token, user };
+      const { token, expirationTime } = generateToken(user, isRemember);
+      return { token, expirationTime, user };
     },
   },
 };
