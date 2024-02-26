@@ -16,8 +16,10 @@ export default function Walkinlogin() {
 
   const [loginUser] = useMutation(LOGIN_USER, {
     onCompleted: (result) => {
+      const expirationTime = new Date().getTime() + 3600 * 1000;
       localStorage.setItem("authToken", result.login.token);
-      localStorage.setItem("userId", result.login.user.User_ID);
+      localStorage.setItem("username", result.login.user.email);
+      localStorage.setItem("tokenExpiration",expirationTime.toString());
       navigate(`/jobopeningdetails/${id}/${loginData.username}`);
     },
     onError: (error) => {
@@ -31,6 +33,7 @@ export default function Walkinlogin() {
       variables: {
         email: loginData.username,
         password: loginData.password,
+        isRemember: loginData.remeber
       },
     });
   };
@@ -56,7 +59,7 @@ export default function Walkinlogin() {
     });
   }
 
-  // console.log(loginData.username);
+  // console.log(loginData.remeber);
   // const { data, error, loading} = useQuery(query, {
   //   variables: {userName:loginData.username},
   // });

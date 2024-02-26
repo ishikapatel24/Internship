@@ -3,7 +3,7 @@ import InstructionalDesigner from "../image/Instructional Designer.png";
 import SoftwareQualityEngineer from "../image/Software Quality Engineer.png";
 import style from "../css/jobdisplay.module.css";
 import jobOpening from "../json/jobOpening";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { gql, useQuery } from "@apollo/client";
@@ -29,9 +29,35 @@ const query = gql`
 
 export default function Joblist() {
   const ind = 1;
+  const [token, setToken] = useState(null);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const isTokenValid = () => {
+      const storedToken = localStorage.getItem('authToken');
+      const expirationTime = localStorage.getItem('tokenExpiration');
+      const username = localStorage.getItem('username');
+      
+      if (storedToken && expirationTime) {
+        const currentTime = new Date().getTime();
+        const isTokenExpired = currentTime > parseInt(expirationTime, 10);
+
+        if (!isTokenExpired) {
+          setToken(storedToken);
+          setUserName(username);
+        } else {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('tokenExpiration');
+        }
+      }
+    };
+    isTokenValid();
+  }, []);
+
   const { data, loading } = useQuery(query);
   if (loading) return <h1>Loading...</h1>;
   // console.log(data.getJobopening[0]);
+  
   return (
     <>
       <Navbar userLogo={false} />
@@ -73,7 +99,7 @@ export default function Joblist() {
               ""
             )}
             <Link
-              to={`/walkinlogin/${index+1}`}
+              to={token ? `/jobopeningdetails/${index+1}/${userName}`:`/walkinlogin/${index+1}`}
               style={{ textDecoration: "none" }}
             >
               <button className={style.viewDetails}>VIEW MORE DETAILS</button>

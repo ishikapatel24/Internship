@@ -28,7 +28,7 @@ const authenticateUser = async (email, password) => {
     const passquery = "SELECT * FROM user_login WHERE User_ID = ?";
     const passresult = await queryAsync(passquery, [result[0].User_ID]);
 
-    if (result[0] != null && password == passresult[0].User_password) {
+    if (result[0] != null && passresult[0]!=null && password == passresult[0].User_password) {
       return {
         User_ID: result[0].User_ID,
         email,
@@ -42,9 +42,9 @@ const authenticateUser = async (email, password) => {
   }
 };
 
-const generateToken = (user) => {
+const generateToken = (user , isRemember) => {
   const { email, User_ID } = user;
-  const token = jwt.sign({ email, User_ID }, SECRET, { expiresIn: "1h" });
+  const token = jwt.sign({ email, User_ID }, SECRET, { expiresIn: isRemember ? "30d" : "1h"});
   return token;
 };
 
@@ -171,7 +171,7 @@ const resolvers = {
       const jobLists = await getJobOpening();
       return jobLists.filter(
         (jobList) => String(jobList.Job_opening_ID) === args.ID
-      );
+        );
     },
     async getUserLoginDetails(_, args) {
       const userLoginDetails = await getUserLoginDetails();
@@ -241,6 +241,7 @@ const resolvers = {
   JobOpening: {
     async additionalDetails(parent) {
       const additionalDetails = await getAdditionalDetails();
+      // console.log(additionalDetails[0]);
       return additionalDetails.filter(
         (additionalDetail) =>
           additionalDetail.Job_opening_ID === parent.Job_opening_ID
@@ -674,13 +675,13 @@ const resolvers = {
         });
       }
     },
-    login: async (_, { email, password }) => {
+    login: async (_, { email, password , isRemember}) => {
       const user = await authenticateUser(email, password);
       if (!user) {
         throw new Error("Invalid credentials");
       }
 
-      const token = generateToken(user);
+      const token = generateToken(user, isRemember);
       return { token, user };
     },
   },

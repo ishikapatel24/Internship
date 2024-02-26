@@ -169,7 +169,7 @@ const typeDefs = `#graphql
     }
     
     type Mutation{
-        login(email: String!, password: String!): AuthPayload
+        login(email: String!, password: String!, isRemember: Boolean!): AuthPayload
         sigin(input:userInput!):UserDetails
         applyJob(input:applyInput):UserDetails
     }

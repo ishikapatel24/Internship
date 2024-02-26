@@ -19,14 +19,15 @@ const APPLY_MUTATION = gql`
 `;
 
 const LOGIN_USER = gql`
-  mutation Mutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        User_ID
-      }
+  mutation Mutation($email: String!, $password: String!, $isRemember: Boolean!) {
+  login(email: $email, password: $password, isRemember: $isRemember) {
+    token
+    user {
+      User_ID
+      email
     }
   }
+}
 `;
 
 export { SIGNIN_MUTATION, APPLY_MUTATION, LOGIN_USER };
