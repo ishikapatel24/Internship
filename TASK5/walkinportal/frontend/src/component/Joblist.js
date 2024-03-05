@@ -37,6 +37,7 @@ export default function Joblist() {
       const storedToken = localStorage.getItem('authToken');
       const expirationTime = localStorage.getItem('tokenExpiration');
       const username = localStorage.getItem('username');
+      console.log(expirationTime);
       
       if (storedToken && expirationTime) {
         const currentTime = new Date().getTime();

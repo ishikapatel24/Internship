@@ -18,6 +18,7 @@ export default function Walkinlogin() {
     onCompleted: (result) => {
       localStorage.setItem("authToken", result.login.token);
       localStorage.setItem("username", result.login.user.email);
+      console.log(result.login.expirationTime);
       localStorage.setItem("tokenExpiration", result.login.expirationTime);
       navigate(`/jobopeningdetails/${id}/${loginData.username}`);
     },

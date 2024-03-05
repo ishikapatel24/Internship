@@ -22,6 +22,7 @@ const LOGIN_USER = gql`
   mutation Mutation($email: String!, $password: String!, $isRemember: Boolean!) {
   login(email: $email, password: $password, isRemember: $isRemember) {
     token
+    expirationTime
     user {
       User_ID
       email

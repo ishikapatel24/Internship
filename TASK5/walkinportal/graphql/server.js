@@ -5,6 +5,7 @@ const { connection } = require("./database/database.js");
 const { dateScalar } = require("./customscalar/graphqlscalar.js");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const queryAsync = promisify(connection.query).bind(connection);
 const SECRET = "my-secret-key";
@@ -26,11 +27,17 @@ const authenticateUser = async (email, password) => {
     const query = "SELECT * FROM users WHERE Email_ID = ?";
     const result = await queryAsync(query, queryparams);
 
-    if (result[0] != null && password == result[0].User_password) {
-      return {
-        User_ID: result[0].User_ID,
-        email,
-      };
+    if (result[0] != null) {
+      const passwordMatch = await bcrypt.compare(
+        password,
+        result[0].User_password
+      );
+      if (passwordMatch) {
+        return {
+          User_ID: result[0].User_ID,
+          email,
+        };
+      }
     }
 
     return null;
@@ -345,6 +352,7 @@ const resolvers = {
         Other_familiar_tech,
       } = input;
 
+      const hashedPassword = await bcrypt.hash(User_password, 10);
       const Query = `
                 INSERT INTO users (First_name, Last_name, Email_ID, User_password, Phone_number, Resume_url, Portfolio_url, User_image_url, Referrer_name, Is_subscribed_to_email, dt_created, dt_modified)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,NOW(), NOW());
@@ -357,7 +365,7 @@ const resolvers = {
             First_name,
             Last_name,
             Email_ID,
-            User_password,
+            hashedPassword,
             Phone_number,
             Resume_url,
             Portfolio_url,
@@ -496,23 +504,23 @@ const resolvers = {
             }
           );
         });
-      }
 
-      for (const tech_ID of familiarTech) {
-        const insertQuery = `
+        for (const tech_ID of familiarTech) {
+          const insertQuery = `
           INSERT INTO user_familiar_technology (User_ID,User_familiar_technologies_ID,User_familiar_technologies_name,Dt_created,Dt_modified) VALUES (? ,? , ?,NOW() ,NOW());
         `;
 
-        await new Promise((resolve, reject) => {
-          connection.query(
-            insertQuery,
-            [User_ID, tech_ID.ID, Other_familiar_tech],
-            (error) => {
-              if (error) reject(error);
-              else resolve();
-            }
-          );
-        });
+          await new Promise((resolve, reject) => {
+            connection.query(
+              insertQuery,
+              [User_ID, tech_ID.ID, Other_familiar_tech],
+              (error) => {
+                if (error) reject(error);
+                else resolve();
+              }
+            );
+          });
+        }
       }
 
       if (Expert_tech.lenght > 0) {
@@ -684,6 +692,7 @@ const resolvers = {
       }
 
       const { token, expirationTime } = generateToken(user, isRemember);
+      console.log(expirationTime);
       return { token, expirationTime, user };
     },
   },
